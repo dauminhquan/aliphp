@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #app{
+            width: 200px;
+        }
+        .title{
+            padding: 10px;
+            font-weight: bold;
+        }
+        .button-put{
+            padding: 5px;
+        }
+        .button-put button{
+            width: 40px;
+            height: 30px;
+            border-radius: 3px;
+            color: white;
+        }
+        .btn-g{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bat{
+            background-color: rgba(56,232,100,0.83);
+        }
+        .tat{
+            background-color: rgba(74,115,232,0.24);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="title">Tình trạng tool là đang <span id="text-status">bật</span></div>
+    <div class="btn-g">
+        <div class="button-put">
+            <button class="bat" id="bat">Bật</button>
+        </div>
+        <div class="button-put">
+            <button class="tat" id="tat">Tắt</button>
+        </div>
+    </div>
+</div>
+<script src="scripts/popup.js"></script>
+</body>
+</html>
