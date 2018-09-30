@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layout')
 @section('content')
     <!-- Main cont!-- Main c  <div class="content-wrapper">
 

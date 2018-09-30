@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,6 +23,19 @@ class HomeController extends Controller
             'products' => $products
         ]);
     }
+    public function columns(){
+        return view('columns');
+    }
+
+    public function templates(){
+        return view('templates');
+    }
+    public function template($id)
+    {
+        $template = Template::findOrFail($id);
+        return view('template',['id' => $id]);
+    }
+
     public function exportExcel(Request $request){
         $validator = Validator::make($request->all(),$this->filter());
         if($validator->fails())

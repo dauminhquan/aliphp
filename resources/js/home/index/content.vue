@@ -89,39 +89,25 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Tên sản phẩm</label>
                                         <div class="col-lg-10">
-                                            <textarea type="text" class="form-control" v-model="info.product_name"></textarea>
+                                            <textarea type="text" class="form-control" v-model="info.item_name"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold">Giá sản phẩm</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control">
+                                            <input type="text" v-model="info.standard_price" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2 text-bold">Category</label>
+                                        <label class="control-label col-lg-2 text-bold">Ngách trên Aliexpress</label>
                                         <div class="col-lg-10">
-                                            <input type="text" v-model="info.category_name" class="form-control">
+                                            <input type="text" v-model="info.branch_aliexpress" readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group" v-if="info.colors != undefined">
                                         <label class="control-label col-lg-2 text-bold">Danh sách màu</label>
                                         <div class="col-lg-10">
-                                            <div class="row" >
-                                                <div class="col-lg-9" style="padding: 0">
-                                                    <div class="row form-group" v-for="color in info.colors" :key="color.id">
-                                                        <div class="col-lg-11">
-                                                            <input type="text" v-model="color.name" class="form-control">
-                                                        </div>
-                                                        <div class="col-lg-1">
-                                                            <img :class="selectedImageColor(color.id)" :src="color.url_image" style="cursor: pointer;" @click="imageColorSelected = color.id;imageHover = color.url_image">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <img :src="ComputedImageHover" alt="Ảnh hover" style="width: 100%">
-                                                </div>
-                                            </div>
+                                            <input type="text" v-model="info.colors" readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -131,7 +117,7 @@
                                                <div class="col-lg-12 col-md-6">
                                                    <div class="thumbnail no-padding">
                                                        <div class="thumb image-main">
-                                                           <img :src="info.imageMain">
+                                                           <img :src="info.main_image_url">
                                                            <div class="caption-overflow">
                                                                 <span>
                                                                     <a href="#" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
@@ -147,10 +133,10 @@
                                                </div>
                                            </div>
                                             <div class="row">
-                                                <div class="col-lg-3 col-md-6" v-for="image in info.images" v-if="image.type != 1">
+                                                <div class="col-lg-3 col-md-6" v-for="image in info.other_images_url" :key="image">
                                                     <div class="thumbnail no-padding">
                                                         <div class="thumb">
-                                                            <img :src="image.image_url" alt="">
+                                                            <img :src="image" alt="">
                                                             <div class="caption-overflow">
                                                                 <span>
                                                                     <a href="#" target="_blank" class="btn bg-success-400 btn-icon btn-xs" data-popup="lightbox"><i class="icon-plus2"></i></a>
@@ -169,16 +155,16 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold">Mô tả sản phẩm</label>
-                                        <button class="btn btn-success" type="button" @click="showCodeDescription = true;setHtmlToCkec(info.description)"><i class="icon-cog2"></i> Show code</button>
+                                        <button class="btn btn-success" type="button" @click="showCodeDescription = true;setHtmlToCkec(info.product_description)"><i class="icon-cog2"></i> Show code</button>
                                         <button class="btn btn-info" type="button" @click="showCodeDescription = false"><i class="icon-section"></i> Show HTML</button>
                                     </div>
                                     <div class="form-group">
                                         <div class="description-content">
                                             <div class="row">
-                                                <div class="col-lg-12 product-description" v-show="showCodeDescription == false" v-html="info.description">
+                                                <div class="col-lg-12 product-description" v-show="showCodeDescription == false" v-html="info.product_description">
                                                 </div>
                                                 <div class="col-lg-12" v-show="showCodeDescription == true">
-                                                    <textarea id="content-description-product" v-model="info.description"></textarea>
+                                                    <textarea id="content-description-product" v-model="info.product_description"></textarea>
                                                 </div>
                                             </div></div>
                                     </div>
@@ -384,61 +370,63 @@
                             item.category_name = item.category.name
                         }
 
-                        item.colors_array = ''
-                        if(item.colors != null)
-                        {
-                            item.colors.forEach(i => {
-                                item.colors_array+= i.name+' ; '
-                            })
-                        }
-                        item.colors_array = `<p style="background-color: white;
+
+                        item.colors_html = `<p style="background-color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;" title="${item.colors_array}">${item.colors_array}</p>`
-                        item.sizes_array = ''
-                        if(item.sizes != null)
-                        {
-                            item.sizes.forEach(i => {
-                                item.sizes_array+= i.name+' ; '
-                            })
-                        }
+    max-width: 150px;" title="${item.colors}">${item.colors}</p>`
+                        item.sizes_html = `<p style="background-color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;" title="${item.colors}">${item.sizes}</p>`
                         item.html_name = `<p style="background-color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;" title="${item.product_name}">${item.product_name}</p>`
-                        item.textUrl = '<a href="'+item.product_url+'" target="_blank">#'+item.product_id+'</a>'
+    max-width: 150px;" title="${item.item_name}">${item.item_name}</p>`
+                        item.textUrl = '<a href="'+item.url_aliexpress+'" target="_blank">#'+item.aliexpress_product_id+'</a>'
+                        item.branch_aliexpress_html = `<p style="background-color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;" title="${item.branch_aliexpress}">${item.branch_aliexpress}</p>`
+                        item.other_images_url = item.other_images.split(';')
+                        item.other_images_url.filter(item => {
+                            return item != '' && item != null && item!= undefined
+                        })
                         return item
                     })
+
                     vm.columns = [
                         {
                             key: 'id',
-                            text: 'Mã sản phẩm'
+                            text: 'ID'
                         },
                         {
                             key:'html_name',
                             text: 'Tên sản phẩm'
                         },
                         {
-                            key:'colors_array',
+                            key:'colors_html',
                             text: 'Các màu'
                         },
                         {
-                            key:'sizes_array',
+                            key:'sizes_html',
                             text: 'Các kích cỡ'
+                        },
+                        {
+                          key: 'standard_price',
+                          text: 'Giá dự kiến'
                         },
                         {
                           key: 'textUrl',
                           text: 'Url'
                         },
                         {
-                          key: 'category_name',
+                          key: 'branch_aliexpress_html',
                           text: 'Category'
-                        },
-                        {
-                            key:'created_at',
-                            text: 'Thời gian tìm thấy'
                         }
 
                     ]
@@ -526,7 +514,7 @@
             deleteListItem() {
                 let vm = this
                 vm.deleting = true
-                /*axios.delete(vm.config.API_ADMIN_STUDENTS_DELETE_LIST,{
+                axios.delete('/api/destroy-products',{
                     params:{
                         id_list: vm.itemSelected
                     }
@@ -544,7 +532,6 @@
 
                     vm.data = newData
 
-                    vm.config.notifySuccess()
                     vm.itemSelected = []
                     vm.resetCheck = !vm.resetCheck
 
@@ -552,8 +539,9 @@
                     $('#modal-danger-delete-list').modal('hide')
                     vm.deleting = false
                     console.log(err)
-                    vm.config.notifyError()
-                })*/
+                    alert('Có lỗi. Vui lòng báo với dev')
+
+                })
             },
             existsItem(item,Arry){
                 let result = false
@@ -573,26 +561,8 @@
             },
             getProductInfo(id){
                 let vm = this
-                axios.get(`/api/products/${id}`).then(data => {
-                    console.log(data)
-                    if(data.data.category != null && data.data.category != undefined)
-                    {
-                        data.data.category_name = data.data.category.name
-                    }
-                    if(data.data.images.length > 0 )
-                    {
-                        data.data.images.forEach(img => {
-                            img.image_url = img.image_url.replace('_50x50.jpg','')
-                            if(img.type == 1)
-                            {
-                                data.data.imageMain = img.image_url
-                            }
-                        })
-                    }
-                    vm.info = data.data
-                    }).catch(err => {
-                    console.log(err)
-                    vm.config.notifyError()
+                vm.info = vm.data.find(item => {
+                    return item.id == id
                 })
             },
             changePerPage(perPage){

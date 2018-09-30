@@ -7,28 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'product_name',
-        'product_url',
-        'product_id',
-        'product_star',
-        'product_rating_des',
-        'product_rating_seller',
-        'product_rating_shipping',
-        'description',
-        'category_id'
+        'item_name',
+        'item_sku',
+        'standard_price',
+        'product_description',
+        'main_image_url',
+        'swatch_image',
+        'colors',
+        'sizes',
+        'other_images',
+        'branch_aliexpress',
+        'url_aliexpress',
+        'specifics',
+        'key_works',
+        'aliexpress_product_id'
     ];
-    public function colors(){
-        return $this->hasMany(Color::class);
-    }
-    public function sizes()
-    {
-        return $this->hasMany(Size::class);
-    }
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-    public function category(){
-        return $this->belongsTo(Category::class);
-    }
 }

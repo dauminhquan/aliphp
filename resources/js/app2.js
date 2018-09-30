@@ -40,12 +40,12 @@ chrome.storage.local.get('statusTool', function (result) {
                 window.open($(products[i]).attr('href'),'_blank')
             }
 
-            setTimeout(function () {
+            /*setTimeout(function () {
                 if(status == 1)
                 {
                     window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
                 }
-            },40000)
+            },40000)*/
 
         }
     }
@@ -77,7 +77,13 @@ chrome.storage.local.get('statusTool', function (result) {
             }
             if(lowePrice == null || lowePrice==undefined || highPrice == null || highPrice == undefined)
             {
-                lowePrice = highPrice = $('span#j-sku-price').html()
+                if($('span#j-sku-discount-price') != undefined)
+                {
+                    lowePrice = highPrice = $('span#j-sku-discount-price').html()
+                }
+               else{
+                    lowePrice = highPrice = $('span#j-sku-price').html()
+                }
             }
             let star = null
             let st = $('.percent-num')[0]
@@ -116,39 +122,40 @@ chrome.storage.local.get('statusTool', function (result) {
                                 let liColors = $(infoColorAndSizeProduct).find('dt:contains(color):eq(0)').next('dd').find('li')
                                 let liSizes = $(infoColorAndSizeProduct).find('dt:contains(size):eq(0)').next('dd').find('li')
 
-                                let colors = [];
+                                let colors = '';
 
-                                let sizes = [];
+                                let sizes = '';
 
 
                                 for(let i = 0;i< liColors.length;i++)
                                 {
-                                    colors.push($(liColors[i]).children('a:eq(0)').attr('title'))
+                                    if($(liColors[i]).children('a:eq(0)').attr('title') == undefined)
+                                    {
+                                        colors+=$(liColors[i]).children('a:eq(0)').children('span:eq(0)').html()+';'
+                                    }
+                                    else{
+                                        colors+=$(liColors[i]).children('a:eq(0)').attr('title')+';'
+                                    }
                                 }
 
                                 for(let i = 0;i< liSizes.length;i++)
                                 {
-                                    sizes.push($(liSizes[i]).children('a:eq(0)').children('span:eq(0)').html())
+                                    sizes+=$(liSizes[i]).children('a:eq(0)').children('span:eq(0)').html()+';'
                                 }
 
 
                                 let imagesProduct = $('#j-image-thumb-list>li>span>img')
                                 //
-                                let images = []
-
+                                let other_images = ''
+                                let main_image = ''
                                 for (let i = 0;i< imagesProduct.length;i++)
                                 {
                                     if(i == 0)
                                     {
-                                        images.push({
-                                            image_url: $(imagesProduct[i]).attr('src'),
-                                            type: 1
-                                        })
+                                        main_image = $(imagesProduct[i]).attr('src')
+                                        main_image = main_image.replace('_50x50.jpg','')
                                     }else{
-                                        images.push({
-                                            image_url: $(imagesProduct[i]).attr('src'),
-                                            type: 2
-                                        })
+                                        other_images+=($(imagesProduct[i]).attr('src')).replace('_50x50.jpg','')+';'
                                     }
                                 }
 
@@ -165,33 +172,63 @@ chrome.storage.local.get('statusTool', function (result) {
                                         if(data != null && data !='')
                                         {
                                             description = data
+                                            let dom_nodes = $($.parseHTML(`<div>${data}</div>`));
+                                             $(dom_nodes).find(':contains(aliexpress)').parents('p:eq(0)').remove()
+                                            $(dom_nodes).find('a').remove()
+                                            $(dom_nodes).find('img').remove()
+                                            description = $(dom_nodes).html()
                                         }
                                     },
                                     error: function (error) {
+                                        window.close()
                                         console.log(error)
                                     },
                                     async:false
                                 })
+                                let specifics = $('.product-property-list:eq(0)').html()
+                                let key_works = ''
+                                console.log(idProduct)
+                                $.ajax({
+                                    type:'get',
+                                    url: 'https://www.aliexpress.com/seo/detailCrosslinkAjax.htm?productId='+idProduct,
+                                    success: function (data) {
+                                        let dom_nodes = $($.parseHTML(`<div>${data}</div>`));
+                                        let keyworks_a = $(dom_nodes).find('a')
+
+                                        for(let i = 0;i<keyworks_a.length; i++)
+                                        {
+                                            if(i< 5)
+                                            {
+                                                key_works+=$(keyworks_a[i]).text()+';'
+                                            }
+                                        }
+                                    },
+                                    error: function (error) {
+
+                                        console.log(error)
+                                    },
+                                    async:false
+                                })
+
+                                console.log(key_works,specifics,document.getElementsByClassName('ui-breadcrumb')[0].innerText)
                                 $.ajax({
                                     url: 'http://localhost:3000/put/product',
                                     type: 'POST',
                                     data: {
                                         data: JSON.stringify({
-                                            product_id: idProduct,
-                                            product_name: $('h1.product-name')[0].innerHTML,
+                                            aliexpress_product_id: idProduct,
                                             item_name:  $('h1.product-name')[0].innerHTML,
-                                            standard_price: '',
-                                            product_url: window.location.href,
-                                            product_star: star,
-                                            product_rating_des: data.product_rating_des,
-                                            product_rating_shipping: data.product_rating_shipping,
-                                            product_rating_seller: data.product_rating_seller,
-                                            description: description,
-                                            images: images,
+                                            url_aliexpress: window.location.href,
+                                            product_description: description,
+                                            main_image_url: main_image,
+                                            swatch_image: '',
+                                            other_images: other_images,
                                             sizes: sizes,
+                                            branch_aliexpress: document.getElementsByClassName('ui-breadcrumb')[0].innerText.replace('Back to search results ',''),
                                             colors: colors,
-                                            category: category,
-                                            prices: price
+                                            specifics: specifics,
+                                            key_works: key_works,
+                                            standard_price: price
                                         })
                                     },
                                     headers: {

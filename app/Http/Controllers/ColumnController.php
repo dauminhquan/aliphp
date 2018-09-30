@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Column;
+use App\Excel;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class ProductController extends Controller
+class ColumnController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,14 +21,14 @@ class ProductController extends Controller
         {
             if($inputs['size'] == -1)
             {
-                $products = Product::paginate(100000);
+                $colums = Column::paginate(100000);
             }
             else{
-                $products = Product::paginate($inputs['size']);
+                $colums = Column::paginate($inputs['size']);
             }
         }
         else {
-            $products = Product::paginate(500);
+            $colums = Column::paginate(500);
         }
         /*foreach ($products as $product)
         {
@@ -35,7 +36,7 @@ class ProductController extends Controller
             $product->colors = $product->colors;
             $product->category = $product->category;
         }*/
-        return $products;
+        return $colums;
     }
 
     /**
@@ -56,27 +57,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-//        return $request->all();
-        $data = (array)$request->all();
-        $data['item_sku'] = Str::random(10);
-        while (Product::where('item_sku',$data['item_sku'])->first() != null)
-        {
-            $data['item_sku'] = Str::random(10);
-        }
-       $product = Product::create($data);
-       return $product;
+        $column = Column::create($request->all());
+        return $column;
     }
-    public function destroyMany(Request $request){
-        $ids = $request->id_list;
-        foreach ($ids as $id)
+    public function storeMany(Request $request)
+    {
+        $columns = $request->columns;
+        $listError = [];
+        foreach ($columns as $column)
         {
-            $product = Product::find($id);
-            if($product != null)
+            if(Column::where('name',$column['name'])->first() != null)
             {
-                $product->delete();
+                $listError[] = $column;
+            }
+            else{
+                Column::create($column);
             }
         }
-        return $request->all();
+
+        return [
+            'list_err' => $listError
+        ];
     }
 
     /**
@@ -87,9 +88,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-
-        return $product;
+        $column = Column::findOrFail($id);
+        return $column;
     }
 
     /**
@@ -112,8 +112,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::where('id',$id)->update($request->all());
-        return $product;
+        $column = Column::findOrFail($id);
+        $column->update($request->all());
+        $excels = Excel::where('column_id',$column->id)->get();
+        if(count($excels) > 0)
+        {
+            foreach ($excels as $excel)
+            {
+                $product = Product::find($excel->product_id);
+                if($product != null)
+                {
+                    $v = $column->product_column;
+                    $excel->value = $product->$v;
+                    $excel->update();
+                }
+                else{
+                    $excel->delete();
+                }
+            }
+        }
+        return $column;
     }
 
     /**
@@ -124,17 +142,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return $product;
+        $column = Column::findOrFail($id);
+        $column->delete();
+        return $column;
     }
-    public function destroies(Request $request){
-        $products = $request->products;
-        foreach ($products as $product)
+    public function destroyMany(Request $request){
+        $id_list = $request->id_list;
+        foreach ($id_list as $id)
         {
-            $_product = Product::findOrFail($product['id']);
-            $_product->delete();
+            $column = Column::find($id);
+            $column->delete();
         }
-        return $products;
+        return $id_list;
     }
 }

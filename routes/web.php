@@ -12,4 +12,7 @@
 */
 
 Route::get('/',['uses' => 'HomeController@index','as' => 'home']);
+Route::get('/columns',['uses' => 'HomeController@columns','as' => 'columns']);
+Route::get('/templates',['uses' => 'HomeController@templates','as' => 'templates']);
+Route::get('/template/{id}',['uses' => 'HomeController@template','as' => 'template']);
 Route::get('/export-excel',['uses' => 'HomeController@exportExcel','as' => 'export.excel']);

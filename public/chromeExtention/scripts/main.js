@@ -60,250 +60,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 50);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/******/ ({
 
-module.exports = __webpack_require__(1);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(3);
-window.$ = window.jQuery = __webpack_require__(2);
-
-window.$ = $;
-
-function joinData(colorDataSkuPropId, colorDataSkuId, colorTitle, sizeDataSkuPropId, sizeDataSkuId, nameSize) {
-    return {
-        attrHasTitle: colorDataSkuPropId + ':' + colorDataSkuId + '#' + colorTitle + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId,
-        attrHasNotTitle: colorDataSkuPropId + ':' + colorDataSkuId + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId,
-        attrHasNameSize: colorDataSkuPropId + ':' + colorDataSkuId + '#' + colorTitle + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId + '#' + nameSize,
-        colorName: colorTitle,
-        sizeName: nameSize
-    };
-}
-
-chrome.storage.local.get('statusTool', function (result) {
-    var status = result.statusTool;
-
-    function getUrlVars(hashes) {
-        var vars = [],
-            hash;
-        hashes = hashes.slice(hashes.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
-    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkCategoryUrl()) {
-        if (status == 1) {
-            var products = $('a.picRind');
-            for (var i = 0; i < products.length; i++) {
-                window.open($(products[i]).attr('href'), '_blank');
-            }
-
-            setTimeout(function () {
-                if (status == 1) {
-                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href');
-                }
-            }, 40000);
-        }
-    }
-    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkProductUrl()) {
-        var category = $('div.ui-breadcrumb:eq(0) a:eq(2)').html();
-
-        if (status == 1) {
-            var scr = document.createElement("script");
-            scr.type = "text/javascript";
-            var nt = new Date();
-            nt = nt.getTime();
-            scr.innerHTML = "localStorage.setItem('adminSeq" + nt + "', window.runParams.adminSeq);localStorage.setItem('desProduct" + nt + "',window.runParams.detailDesc);localStorage.setItem('productId" + nt + "',window.runParams.productId);localStorage.setItem('skuProducts" + nt + "',JSON.stringify(skuProducts));localStorage.setItem('skuAttrIds" + nt + "',skuAttrIds)";
-            document.body.appendChild(scr);
-            var skuProducts = JSON.parse(localStorage.getItem('skuProducts' + nt));
-            var adminSeq = localStorage.getItem('adminSeq' + nt);
-            var skuAttrIds = localStorage.getItem('skuAttrIds' + nt);
-            var lowePrice = void 0,
-                highPrice = null;
-            if ($('span[itemprop="lowPrice"]').length != 0) {
-                lowePrice = $($('span[itemprop="lowPrice"]')[0]).html();
-            }
-            var idProduct = localStorage.getItem('productId' + nt); /*$($('a.send-mail-btn')[0]).attr('data-id1')*/
-
-            if ($('span[itemprop="highPrice"]').length != 0) {
-                highPrice = $($('span[itemprop="highPrice"]')[0]).html();
-            }
-            if (lowePrice == null || lowePrice == undefined || highPrice == null || highPrice == undefined) {
-                lowePrice = highPrice = $('span#j-sku-price').html();
-            }
-            var star = null;
-            var st = $('.percent-num')[0];
-            if (st == null) {
-                window.close();
-            }
-            star = st.innerHTML;
-
-            if (parseFloat(star) < 4.8) {
-                window.close();
-            } else {
-                try {
-                    $.ajax({
-                        url: 'http://localhost:3000',
-                        type: 'get',
-                        data: {
-                            ownerId: adminSeq,
-                            productId: idProduct,
-                            minPrice: lowePrice,
-                            maxPrice: highPrice
-                        },
-                        success: function success(data) {
-                            if (data.result == 1) {
-                                var price = highPrice;
-
-                                $.expr[':'].contains = function (a, i, m) {
-                                    return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-                                };
-
-                                var infoColorAndSizeProduct = $('#j-product-info-sku');
-
-                                var liColors = $(infoColorAndSizeProduct).find('dt:contains(color):eq(0)').next('dd').find('li');
-                                var liSizes = $(infoColorAndSizeProduct).find('dt:contains(size):eq(0)').next('dd').find('li');
-
-                                var colors = [];
-
-                                var sizes = [];
-
-                                for (var _i = 0; _i < liColors.length; _i++) {
-                                    colors.push($(liColors[_i]).children('a:eq(0)').attr('title'));
-                                }
-
-                                for (var _i2 = 0; _i2 < liSizes.length; _i2++) {
-                                    sizes.push($(liSizes[_i2]).children('a:eq(0)').children('span:eq(0)').html());
-                                }
-
-                                var imagesProduct = $('#j-image-thumb-list>li>span>img');
-                                //
-                                var images = [];
-
-                                for (var _i3 = 0; _i3 < imagesProduct.length; _i3++) {
-                                    if (_i3 == 0) {
-                                        images.push({
-                                            image_url: $(imagesProduct[_i3]).attr('src'),
-                                            type: 1
-                                        });
-                                    } else {
-                                        images.push({
-                                            image_url: $(imagesProduct[_i3]).attr('src'),
-                                            type: 2
-                                        });
-                                    }
-                                }
-
-                                var urlDes = localStorage.getItem('desProduct' + nt);
-
-                                var parmas = getUrlVars(urlDes);
-                                //
-                                urlDes = 'https://aeproductsourcesite.alicdn.com/product/description/pc/v2/en_US/desc.htm?productId=' + parmas.productId + '&key=' + parmas.key + '&token=' + parmas.token + '&v=1';
-                                var description = null;
-                                $.ajax({
-                                    url: urlDes,
-                                    type: 'get',
-                                    success: function success(data) {
-                                        if (data != null && data != '') {
-                                            description = data;
-                                        }
-                                    },
-                                    error: function error(_error) {
-                                        console.log(_error);
-                                    },
-                                    async: false
-                                });
-                                $.ajax({
-                                    url: 'http://localhost:3000/put/product',
-                                    type: 'POST',
-                                    data: {
-                                        data: JSON.stringify({
-                                            product_id: idProduct,
-                                            product_name: $('h1.product-name')[0].innerHTML,
-                                            item_name: $('h1.product-name')[0].innerHTML,
-                                            standard_price: '',
-                                            product_url: window.location.href,
-                                            product_star: star,
-                                            product_rating_des: data.product_rating_des,
-                                            product_rating_shipping: data.product_rating_shipping,
-                                            product_rating_seller: data.product_rating_seller,
-                                            description: description,
-                                            images: images,
-                                            sizes: sizes,
-                                            colors: colors,
-                                            category: category,
-                                            prices: price
-                                        })
-                                    },
-                                    headers: {
-                                        'Accept': 'application/json'
-                                    },
-                                    success: function success(data) {
-                                        console.log(data);
-                                        localStorage.removeItem('adminSeq' + nt);
-                                        localStorage.removeItem('desProduct' + nt);
-                                        localStorage.removeItem('productId' + nt);
-                                        localStorage.removeItem('skuProducts' + nt);
-                                        localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
-                                        window.close();
-                                    },
-                                    error: function error(err) {
-                                        localStorage.removeItem('adminSeq' + nt);
-                                        localStorage.removeItem('desProduct' + nt);
-                                        localStorage.removeItem('productId' + nt);
-                                        localStorage.removeItem('skuProducts' + nt);
-                                        localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
-                                        window.close();
-                                    }
-                                });
-                            } else {
-                                localStorage.removeItem('adminSeq' + nt);
-                                localStorage.removeItem('desProduct' + nt);
-                                localStorage.removeItem('productId' + nt);
-                                localStorage.removeItem('skuProducts' + nt);
-                                localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
-                                window.close();
-                            }
-                        },
-                        error: function error(err) {
-                            console.log(err);
-                            localStorage.removeItem('adminSeq' + nt);
-                            localStorage.removeItem('desProduct' + nt);
-                            localStorage.removeItem('productId' + nt);
-                            localStorage.removeItem('skuProducts' + nt);
-                            localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
-                            window.close();
-                        }
-                    });
-                } catch (e) {
-                    localStorage.removeItem('adminSeq' + nt);
-                    localStorage.removeItem('desProduct' + nt);
-                    localStorage.removeItem('productId' + nt);
-                    localStorage.removeItem('skuProducts' + nt);
-                    localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
-                    window.close();
-                }
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 2 */
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10674,7 +10436,281 @@ return jQuery;
 
 
 /***/ }),
-/* 3 */
+
+/***/ 50:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(51);
+
+
+/***/ }),
+
+/***/ 51:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(52);
+window.$ = window.jQuery = __webpack_require__(1);
+
+window.$ = $;
+
+function joinData(colorDataSkuPropId, colorDataSkuId, colorTitle, sizeDataSkuPropId, sizeDataSkuId, nameSize) {
+    return {
+        attrHasTitle: colorDataSkuPropId + ':' + colorDataSkuId + '#' + colorTitle + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId,
+        attrHasNotTitle: colorDataSkuPropId + ':' + colorDataSkuId + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId,
+        attrHasNameSize: colorDataSkuPropId + ':' + colorDataSkuId + '#' + colorTitle + ';' + sizeDataSkuPropId + ':' + sizeDataSkuId + '#' + nameSize,
+        colorName: colorTitle,
+        sizeName: nameSize
+    };
+}
+
+chrome.storage.local.get('statusTool', function (result) {
+    var status = result.statusTool;
+
+    function getUrlVars(hashes) {
+        var vars = [],
+            hash;
+        hashes = hashes.slice(hashes.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkCategoryUrl()) {
+        if (status == 1) {
+            var products = $('a.picRind');
+            for (var i = 0; i < products.length; i++) {
+                window.open($(products[i]).attr('href'), '_blank');
+            }
+
+            /*setTimeout(function () {
+                if(status == 1)
+                {
+                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
+                }
+            },40000)*/
+        }
+    }
+    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkProductUrl()) {
+        var category = $('div.ui-breadcrumb:eq(0) a:eq(2)').html();
+
+        if (status == 1) {
+            var scr = document.createElement("script");
+            scr.type = "text/javascript";
+            var nt = new Date();
+            nt = nt.getTime();
+            scr.innerHTML = "localStorage.setItem('adminSeq" + nt + "', window.runParams.adminSeq);localStorage.setItem('desProduct" + nt + "',window.runParams.detailDesc);localStorage.setItem('productId" + nt + "',window.runParams.productId);localStorage.setItem('skuProducts" + nt + "',JSON.stringify(skuProducts));localStorage.setItem('skuAttrIds" + nt + "',skuAttrIds)";
+            document.body.appendChild(scr);
+            var skuProducts = JSON.parse(localStorage.getItem('skuProducts' + nt));
+            var adminSeq = localStorage.getItem('adminSeq' + nt);
+            var skuAttrIds = localStorage.getItem('skuAttrIds' + nt);
+            var lowePrice = void 0,
+                highPrice = null;
+            if ($('span[itemprop="lowPrice"]').length != 0) {
+                lowePrice = $($('span[itemprop="lowPrice"]')[0]).html();
+            }
+            var idProduct = localStorage.getItem('productId' + nt); /*$($('a.send-mail-btn')[0]).attr('data-id1')*/
+
+            if ($('span[itemprop="highPrice"]').length != 0) {
+                highPrice = $($('span[itemprop="highPrice"]')[0]).html();
+            }
+            if (lowePrice == null || lowePrice == undefined || highPrice == null || highPrice == undefined) {
+                if ($('span#j-sku-discount-price') != undefined) {
+                    lowePrice = highPrice = $('span#j-sku-discount-price').html();
+                } else {
+                    lowePrice = highPrice = $('span#j-sku-price').html();
+                }
+            }
+            var star = null;
+            var st = $('.percent-num')[0];
+            if (st == null) {
+                window.close();
+            }
+            star = st.innerHTML;
+
+            if (parseFloat(star) < 4.8) {
+                window.close();
+            } else {
+                try {
+                    $.ajax({
+                        url: 'http://localhost:3000',
+                        type: 'get',
+                        data: {
+                            ownerId: adminSeq,
+                            productId: idProduct,
+                            minPrice: lowePrice,
+                            maxPrice: highPrice
+                        },
+                        success: function success(data) {
+                            if (data.result == 1) {
+                                var price = highPrice;
+
+                                $.expr[':'].contains = function (a, i, m) {
+                                    return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+                                };
+
+                                var infoColorAndSizeProduct = $('#j-product-info-sku');
+
+                                var liColors = $(infoColorAndSizeProduct).find('dt:contains(color):eq(0)').next('dd').find('li');
+                                var liSizes = $(infoColorAndSizeProduct).find('dt:contains(size):eq(0)').next('dd').find('li');
+
+                                var colors = '';
+
+                                var sizes = '';
+
+                                for (var _i = 0; _i < liColors.length; _i++) {
+                                    if ($(liColors[_i]).children('a:eq(0)').attr('title') == undefined) {
+                                        colors += $(liColors[_i]).children('a:eq(0)').children('span:eq(0)').html() + ';';
+                                    } else {
+                                        colors += $(liColors[_i]).children('a:eq(0)').attr('title') + ';';
+                                    }
+                                }
+
+                                for (var _i2 = 0; _i2 < liSizes.length; _i2++) {
+                                    sizes += $(liSizes[_i2]).children('a:eq(0)').children('span:eq(0)').html() + ';';
+                                }
+
+                                var imagesProduct = $('#j-image-thumb-list>li>span>img');
+                                //
+                                var other_images = '';
+                                var main_image = '';
+                                for (var _i3 = 0; _i3 < imagesProduct.length; _i3++) {
+                                    if (_i3 == 0) {
+                                        main_image = $(imagesProduct[_i3]).attr('src');
+                                        main_image = main_image.replace('_50x50.jpg', '');
+                                    } else {
+                                        other_images += $(imagesProduct[_i3]).attr('src').replace('_50x50.jpg', '') + ';';
+                                    }
+                                }
+
+                                var urlDes = localStorage.getItem('desProduct' + nt);
+
+                                var parmas = getUrlVars(urlDes);
+                                //
+                                urlDes = 'https://aeproductsourcesite.alicdn.com/product/description/pc/v2/en_US/desc.htm?productId=' + parmas.productId + '&key=' + parmas.key + '&token=' + parmas.token + '&v=1';
+                                var description = null;
+                                $.ajax({
+                                    url: urlDes,
+                                    type: 'get',
+                                    success: function success(data) {
+                                        if (data != null && data != '') {
+                                            description = data;
+                                            var dom_nodes = $($.parseHTML('<div>' + data + '</div>'));
+                                            $(dom_nodes).find(':contains(aliexpress)').parents('p:eq(0)').remove();
+                                            $(dom_nodes).find('a').remove();
+                                            $(dom_nodes).find('img').remove();
+                                            description = $(dom_nodes).html();
+                                        }
+                                    },
+                                    error: function error(_error) {
+                                        window.close();
+                                        console.log(_error);
+                                    },
+                                    async: false
+                                });
+                                var specifics = $('.product-property-list:eq(0)').html();
+                                var key_works = '';
+                                console.log(idProduct);
+                                $.ajax({
+                                    type: 'get',
+                                    url: 'https://www.aliexpress.com/seo/detailCrosslinkAjax.htm?productId=' + idProduct,
+                                    success: function success(data) {
+                                        var dom_nodes = $($.parseHTML('<div>' + data + '</div>'));
+                                        var keyworks_a = $(dom_nodes).find('a');
+
+                                        for (var _i4 = 0; _i4 < keyworks_a.length; _i4++) {
+                                            if (_i4 < 5) {
+                                                key_works += $(keyworks_a[_i4]).text() + ';';
+                                            }
+                                        }
+                                    },
+                                    error: function error(_error2) {
+
+                                        console.log(_error2);
+                                    },
+                                    async: false
+                                });
+
+                                console.log(key_works, specifics, document.getElementsByClassName('ui-breadcrumb')[0].innerText);
+                                $.ajax({
+                                    url: 'http://localhost:3000/put/product',
+                                    type: 'POST',
+                                    data: {
+                                        data: JSON.stringify({
+                                            aliexpress_product_id: idProduct,
+                                            item_name: $('h1.product-name')[0].innerHTML,
+                                            url_aliexpress: window.location.href,
+                                            product_description: description,
+                                            main_image_url: main_image,
+                                            swatch_image: '',
+                                            other_images: other_images,
+                                            sizes: sizes,
+                                            branch_aliexpress: document.getElementsByClassName('ui-breadcrumb')[0].innerText.replace('Back to search results ', ''),
+                                            colors: colors,
+                                            specifics: specifics,
+                                            key_works: key_works,
+                                            standard_price: price
+                                        })
+                                    },
+                                    headers: {
+                                        'Accept': 'application/json'
+                                    },
+                                    success: function success(data) {
+                                        console.log(data);
+                                        localStorage.removeItem('adminSeq' + nt);
+                                        localStorage.removeItem('desProduct' + nt);
+                                        localStorage.removeItem('productId' + nt);
+                                        localStorage.removeItem('skuProducts' + nt);
+                                        localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
+                                        window.close();
+                                    },
+                                    error: function error(err) {
+                                        localStorage.removeItem('adminSeq' + nt);
+                                        localStorage.removeItem('desProduct' + nt);
+                                        localStorage.removeItem('productId' + nt);
+                                        localStorage.removeItem('skuProducts' + nt);
+                                        localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
+                                        window.close();
+                                    }
+                                });
+                            } else {
+                                localStorage.removeItem('adminSeq' + nt);
+                                localStorage.removeItem('desProduct' + nt);
+                                localStorage.removeItem('productId' + nt);
+                                localStorage.removeItem('skuProducts' + nt);
+                                localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
+                                window.close();
+                            }
+                        },
+                        error: function error(err) {
+                            console.log(err);
+                            localStorage.removeItem('adminSeq' + nt);
+                            localStorage.removeItem('desProduct' + nt);
+                            localStorage.removeItem('productId' + nt);
+                            localStorage.removeItem('skuProducts' + nt);
+                            localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
+                            window.close();
+                        }
+                    });
+                } catch (e) {
+                    localStorage.removeItem('adminSeq' + nt);
+                    localStorage.removeItem('desProduct' + nt);
+                    localStorage.removeItem('productId' + nt);
+                    localStorage.removeItem('skuProducts' + nt);
+                    localStorage.removeItem('skuAttrIds' + nt, skuAttrIds);
+                    window.close();
+                }
+            }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10703,4 +10739,5 @@ var curUrl = window.location.href;
 });
 
 /***/ })
-/******/ ]);
+
+/******/ });
