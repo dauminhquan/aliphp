@@ -58,10 +58,10 @@ class ProductController extends Controller
     {
 //        return $request->all();
         $data = (array)$request->all();
-        $data['item_sku'] = Str::random(10);
+        $data['item_sku'] = strtoupper(Str::random(10));
         while (Product::where('item_sku',$data['item_sku'])->first() != null)
         {
-            $data['item_sku'] = Str::random(10);
+            $data['item_sku'] = strtoupper(Str::random(10));
         }
        $product = Product::create($data);
        return $product;
