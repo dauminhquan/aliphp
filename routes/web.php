@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/',['uses' => 'HomeController@index','as' => 'home']);
-Route::get('/columns',['uses' => 'HomeController@columns','as' => 'columns']);
-Route::get('/templates',['uses' => 'HomeController@templates','as' => 'templates']);
-Route::get('/template/{id}',['uses' => 'HomeController@template','as' => 'template']);
-Route::get('/export-excel/{id}',['uses' => 'HomeController@exportExcel','as' => 'export.excel']);
+
+Route::post('/login',['uses' => 'AuthController@postLogin']);
+Route::get('/login',['uses' => 'AuthController@getLogin','as' => 'login']);
+Route::group(['mid' => 'authentication'],function (){
+    Route::get('/',['uses' => 'HomeController@index','as' => 'home']);
+    Route::get('/columns',['uses' => 'HomeController@columns','as' => 'columns']);
+    Route::get('/templates',['uses' => 'HomeController@templates','as' => 'templates']);
+    Route::get('/template/{id}',['uses' => 'HomeController@template','as' => 'template']);
+    Route::get('/export-excel/{id}',['uses' => 'HomeController@exportExcel','as' => 'export.excel']);
+    Route::get('/logout',['uses' => 'AuthController@logout','as' => 'logout']);
+});
