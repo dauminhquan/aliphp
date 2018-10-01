@@ -1,7 +1,7 @@
 {
     "/js/template-products.js": "/js/template-products.js",
     "/js/templates.js": "/js/templates.js",
-    "/js/index.js": "/js/index.js",
     "/js/columns.js": "/js/columns.js",
+    "/js/index.js": "/js/index.js",
     "/chromeExtention/scripts/main.js": "/chromeExtention/scripts/main.js"
 }

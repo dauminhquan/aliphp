@@ -57,7 +57,7 @@
 
                         <div class="modal-body">
 
-                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
+                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
                             <div style="border: snow" class="panel panel-body border-top-danger text-center">
                                 <div class="pace-demo" v-if="deleting == true">
                                     <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
@@ -73,6 +73,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <label class="control-label text-bold" style="position: fixed;z-index: 88888;right: 7%;top: 10%;" v-if="waitingChangeClumn == true" >Đang lưu. Vui lòng đợi...</label>
             </div>
             <div id="info-template" class="modal fade">
                 <div class="modal-dialog modal-full">
@@ -147,6 +150,47 @@
                     </div>
                 </div>
             </div>
+            <div id="setting-columns" class="modal fade">
+                <div class="modal-dialog modal-full">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h5 class="modal-title">Sửa cột</h5>
+                        </div>
+                        <form class="form-horizontal" @submit.prevent="updateItem">
+                            <div class="modal-body">
+                                <fieldset class="content-group">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold" >Danh sách các cột</label>
+
+                                        <div class="col-lg-10">
+                                            <div class="form-group" v-for="column in info.columns" @key="column">
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <input type="text" class="form-control" :value="getNameColumn(column)" readonly>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <select name="" class="form-control" :value="getProductColumnName(column)" @change="changeColumn(column,$event)">
+                                                            <option></option>
+                                                            <option v-for="cl in productColumns" :key="cl" :value="cl">{{trans.find(cl)}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div id="create-column" class="modal fade">
                 <div class="modal-dialog modal-full">
                     <div class="modal-content">
@@ -211,7 +255,7 @@
 <script>
     import table from './../../components/datatable/table'
     import axios from 'axios'
-
+    import trans from './../config'
     export default {
         computed:{
             setAll(){
@@ -224,6 +268,8 @@
         },
         data(){
             return {
+                waitingChangeClumn: false,
+                trans: trans,
                 addColumn: 0,
                 addMultiColumn: false,
                 addMultiRow: null,
@@ -252,6 +298,10 @@
                         html:'<a href="javascript:void(0);"><i class="icon-file-excel"></i> Xuất Excel</a>'
                     },
                     {
+                        action :'setting-columns',
+                        html:'<a href="javascript:void(0);"><i class="icon-cog2"></i> Cài đặt cột</a>'
+                    },
+                    {
                         action :'delete',
                         html:'<a href="javascript:void(0);"><i class="icon-trash"></i> Xóa</a>'
                     }
@@ -276,13 +326,84 @@
                 cls: [],
                 row_length : 1,
                 valueAddToInfo: null,
+                productColumns: [],
+                allColumns: []
             }
         },
         mounted(){
             this.getData()
             this.getColumns()
+            this.getProductColumns()
+            this.getAllColumns()
         },
         methods: {
+            changeColumn(id,e)
+            {
+                this.allColumns.forEach(item => {
+                    if(item.id == id)
+                    {
+                        item.product_column = e.target.value
+                    }
+                })
+                this.waitingChangeClumn = true
+                let vm = this
+                axios.put(`/api/columns/${id}`,{
+                    product_column: e.target.value
+                }).then(data => {
+                    setTimeout(function () {
+                        vm.waitingChangeClumn = false
+                    },1500)
+
+
+                    console.log('success')
+                }).catch(err => {
+                    setTimeout(function () {
+                        vm.waitingChangeClumn = false
+                    },1500)
+                    alert('Thất bại. Hãy load lại trang và báo với dev')
+                    console.log(err)
+                })
+            },
+            getProductColumnName(id){
+                let vm = this
+
+                if(vm.allColumns.length > 0)
+                {
+                    let c = vm.allColumns.find(item => {
+                        return item.id == id
+                    })
+                    return c.product_column
+                }
+                return null
+            },
+            getNameColumn(id){
+                let vm = this
+
+                if(vm.allColumns.length > 0)
+                {
+                    let c = vm.allColumns.find(item => {
+                        return item.id == id
+                    })
+                    return c.name
+                }
+                return null
+            },
+            getAllColumns(){
+                axios.get('/api/columns?size=-1').then(data => {
+                    console.log(data.data)
+                    this.allColumns = data.data.data
+                }).catch(err =>{
+                    console.log(err)
+                })
+            },
+            getProductColumns(){
+                axios.get('/api/product-columns').then(data => {
+                    this.productColumns = data.data
+                })  .catch(err => {
+                    console.log(err)
+                    alert('Có lỗi, vui lòng báo với DEV')
+                })
+            },
             changeInfo(id,event){
                 let vm = this
                 let n = 0
@@ -420,7 +541,7 @@
                         template_name: vm.create.name,
                         columns: vm.create.columns
                     }
-                    ).then(data=>{
+                ).then(data=>{
                     vm.getData()
                     vm.waiting = false
                     alert('Thành công')
@@ -455,6 +576,11 @@
                 if(event[1] == 'template-products')
                 {
                     window.open(`/template/${event[0]}`,'_blank')
+                }
+                if(event[1] == 'setting-columns')
+                {
+                    this.getTemplateInfo(event[0])
+                    $('#setting-columns').modal('show')
                 }
             },
             deleteItem(){
@@ -564,7 +690,7 @@
                     vm.info.columns = vm.info.columns.map(i => {
                         return i.id
                     })
-                    }).catch(err => {
+                }).catch(err => {
                     console.log(err)
                     alert('Có lỗi! Vui lòng báo cho developer')
                 })

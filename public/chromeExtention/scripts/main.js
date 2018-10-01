@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -10437,20 +10437,20 @@ return jQuery;
 
 /***/ }),
 
-/***/ 50:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(51);
+module.exports = __webpack_require__(52);
 
 
 /***/ }),
 
-/***/ 51:
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(53);
 window.$ = window.jQuery = __webpack_require__(1);
 
 window.$ = $;
@@ -10486,12 +10486,11 @@ chrome.storage.local.get('statusTool', function (result) {
                 window.open($(products[i]).attr('href'), '_blank');
             }
 
-            /*setTimeout(function () {
-                if(status == 1)
-                {
-                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
+            setTimeout(function () {
+                if (status == 1) {
+                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href');
                 }
-            },40000)*/
+            }, 40000);
         }
     }
     if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkProductUrl()) {
@@ -10602,7 +10601,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                             $(dom_nodes).find(':contains(aliexpress)').parents('p:eq(0)').remove();
                                             $(dom_nodes).find('a').remove();
                                             $(dom_nodes).find('img').remove();
-                                            description = $(dom_nodes).html();
+                                            description = $(dom_nodes).text();
                                         }
                                     },
                                     error: function error(_error) {
@@ -10710,7 +10709,7 @@ chrome.storage.local.get('statusTool', function (result) {
 
 /***/ }),
 
-/***/ 52:
+/***/ 53:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="media-body">
-                                <a href="#">Eugene Kopyov</a> merged <span class="text-semibold">Master</span> and <span class="text-semibold">Dev</span> branches
+                                <a href="#">Đậu Quân</a> merged <span class="text-semibold">Master</span> and <span class="text-semibold">Dev</span> branches
                                 <div class="media-annotation">Dec 18, 18:36</div>
                             </div>
                         </li>

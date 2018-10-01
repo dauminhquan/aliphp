@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 61);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -63107,7 +63107,34 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 50 */,
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var trans = {
+    item_name: 'Tên sản phẩm',
+    item_sku: 'Sku sản phẩm',
+    branch_name: 'Tên ngách (Nhánh)',
+    aliexpress_product_id: 'Mã sản phẩm trên Aliexpress',
+    branch_aliexpress: 'Ngách sản phẩm trên Aliexpress',
+    brand_name: 'Ngách sản phẩm',
+    colors: 'Danh sách màu của sản phẩm',
+    external_product_id: 'UPC',
+    external_product_id_type: 'Loại mã sản phẩm bên ngoài',
+    feed_product_type: 'Loại sản phẩm'
+
+};
+/* harmony default export */ __webpack_exports__["a"] = ({
+    find: function find(key) {
+        if (trans[key] == undefined) {
+            // console.log('error: '+key+" not found")
+            return key;
+        }
+        return trans[key] + (' (' + key + ')');
+    }
+});
+
+/***/ }),
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -63117,21 +63144,22 @@ module.exports = function spread(callback) {
 /* 57 */,
 /* 58 */,
 /* 59 */,
-/* 60 */
+/* 60 */,
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__content__);
 
 
@@ -63141,19 +63169,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(63)
+  __webpack_require__(64)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(65)
+var __vue_script__ = __webpack_require__(66)
 /* template */
-var __vue_template__ = __webpack_require__(66)
+var __vue_template__ = __webpack_require__(67)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63192,13 +63220,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63218,7 +63246,7 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -63232,7 +63260,7 @@ exports.push([module.i, "\n.image-main{\n    width: 50%;\n    margin: auto;\n}\n
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63241,6 +63269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_datatable_table__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(50);
 //
 //
 //
@@ -63490,7 +63519,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             waiting: false,
             create: {},
             product_columns: [],
-            list_columns: ''
+            list_columns: '',
+            trans: __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */]
         };
     },
     mounted: function mounted() {
@@ -63723,7 +63753,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63873,7 +63903,7 @@ var render = function() {
                     _c("p", [
                       _c("i", { staticClass: "icon-warning" }),
                       _vm._v(
-                        " Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! "
+                        " Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! "
                       )
                     ]),
                     _vm._v(" "),
@@ -64062,7 +64092,11 @@ var render = function() {
                                         domProps: { value: product_column },
                                         on: { key: product_column }
                                       },
-                                      [_vm._v(_vm._s(product_column))]
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.trans.find(product_column))
+                                        )
+                                      ]
                                     )
                                   })
                                 ],
@@ -64235,7 +64269,11 @@ var render = function() {
                                         domProps: { value: product_column },
                                         on: { key: product_column }
                                       },
-                                      [_vm._v(_vm._s(product_column))]
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.trans.find(product_column))
+                                        )
+                                      ]
                                     )
                                   })
                                 ],
@@ -64354,7 +64392,7 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c("p", [
-                                _vm._v(" Mãu: "),
+                                _vm._v(" Mẫu: "),
                                 _c("span", { staticClass: "text-bold" }, [
                                   _vm._v(
                                     "cot1:ten_cot_san_pham1;cot2:ten_cot_san_pham2;cot3:ten_cot_san_pham3;..."

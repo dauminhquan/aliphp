@@ -45,6 +45,34 @@ class TemplateController extends Controller
             $template->products = $template->products;
             return $template;
     }
+    public function product($id,$product_id){
+        $template = Template::findOrFail($id);
+        $columns = $template->columns;
+        $product = Product::findOrFail($product_id);
+        foreach ($columns as $column)
+        {
+            $data = Excel::where('column_id',$column->id)->where('product_id',$product_id)->where('template_id',$id)->first();
+            if($data != null)
+            {
+                $n = $column->name;
+                $product->$n = $data->value;
+            }
+        }
+        return $product;
+    }
+    public function updateProduct(Request$request,$id,$product_id){
+        $template = Template::findOrFail($id);
+        $columns = $template->columns;
+        $product = Product::findOrFail($product_id);
+        foreach ($columns as $column)
+        {
+            $excel = Excel::where('column_id',$column->id)->where('product_id',$product_id)->where('template_id',$id)->first();
+            $n = $column->name;
+            $excel->value = $request->$n;
+            $excel->update();
+        }
+        return $product;
+    }
     public function storeProduct(Request $request)
     {
         $template = Template::findOrFail($request->template_id);
@@ -160,6 +188,46 @@ class TemplateController extends Controller
     public function update(Request $request, $id)
     {
         $template = Template::findOrFail($id);
+        $oldColumns = $template->columns;
+        $idOldColumns = [];
+        $newColumns = $request->columns;
+        $products = $template->products;
+        foreach ($oldColumns as $oldColumn)
+        {
+            $idOldColumns[] = $oldColumn->id;
+        }
+        $remove = [];
+        foreach ($idOldColumns as $idOldColumn)
+        {
+            if(!in_array($idOldColumn,$newColumns))
+            {
+                $remove[] = $idOldColumn;
+            }
+        }
+        $add = [];
+        foreach ($newColumns as $newColumn)
+        {
+            if(!in_array($newColumn,$idOldColumns))
+            {
+                $add[] = $newColumn;
+            }
+        }
+        foreach ($remove as $item)
+        {
+            Excel::where('template_id',$id)->where('column_id',$item)->delete();
+        }
+        foreach ($add as $item)
+        {
+            foreach ($products as $product)
+            {
+                $excel = new Excel();
+                $excel->template_id = $template->id;
+                $excel->column_id = $item;
+                $excel->value = null;
+                $excel->product_id = $product->id;
+                $excel->save();
+            }
+        }
         $template->name = $request->name;
         $template->columns()->sync($request->columns);
         $template->update();

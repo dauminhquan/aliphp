@@ -40,12 +40,12 @@ chrome.storage.local.get('statusTool', function (result) {
                 window.open($(products[i]).attr('href'),'_blank')
             }
 
-            /*setTimeout(function () {
+            setTimeout(function () {
                 if(status == 1)
                 {
                     window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
                 }
-            },40000)*/
+            },40000)
 
         }
     }
@@ -176,7 +176,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                              $(dom_nodes).find(':contains(aliexpress)').parents('p:eq(0)').remove()
                                             $(dom_nodes).find('a').remove()
                                             $(dom_nodes).find('img').remove()
-                                            description = $(dom_nodes).html()
+                                            description = $(dom_nodes).text()
                                         }
                                     },
                                     error: function (error) {

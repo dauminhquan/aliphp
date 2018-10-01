@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 53);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -63110,21 +63110,22 @@ module.exports = function spread(callback) {
 /* 50 */,
 /* 51 */,
 /* 52 */,
-/* 53 */
+/* 53 */,
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(54);
+module.exports = __webpack_require__(55);
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__content__);
 
 
@@ -63134,19 +63135,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(56)
+  __webpack_require__(57)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(58)
+var __vue_script__ = __webpack_require__(59)
 /* template */
-var __vue_template__ = __webpack_require__(59)
+var __vue_template__ = __webpack_require__(60)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63185,13 +63186,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(57);
+var content = __webpack_require__(58);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63211,7 +63212,7 @@ if(false) {
 }
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -63225,7 +63226,7 @@ exports.push([module.i, "\n.image-main{\n    width: 50%;\n    margin: auto;\n}\n
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63234,86 +63235,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_datatable_table__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -63522,20 +63443,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             columns: [],
-            buttonConfig: [{
-                text: 'Thêm mới',
-                className: 'btn bg-primary',
-                action: function action(e, dt, node, config) {
-
-                    // window.open(window._config.WEB_ADMIN_STUDENTS+'/create')
-                }
-            }, {
-                text: 'Tải xuống Excel',
-                className: 'btn bg-info',
-                action: function action(e, dt, node, config) {
-                    $('#download-excel').modal('show');
-                }
-            }],
+            buttonConfig: [],
             deleting: false,
             data: [],
             menu: [{
@@ -63766,7 +63674,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63916,7 +63824,7 @@ var render = function() {
                     _c("p", [
                       _c("i", { staticClass: "icon-warning" }),
                       _vm._v(
-                        " Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! "
+                        " Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! "
                       )
                     ]),
                     _vm._v(" "),
@@ -64480,359 +64388,6 @@ var render = function() {
                             attrs: { type: "button" }
                           },
                           [_vm._v("Lưu thông tin sản phẩm")]
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "modal fade", attrs: { id: "download-excel" } },
-            [
-              _c("div", { staticClass: "modal-dialog modal-full" }, [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button", "data-dismiss": "modal" }
-                      },
-                      [_vm._v("×")]
-                    ),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "modal-title" }, [
-                      _vm._v("Tải xuống Excel")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.opentableDownloadExcel($event)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "modal-body" }, [
-                        _c("fieldset", { staticClass: "content-group" }, [
-                          _c("legend", { staticClass: "text-bold" }, [
-                            _vm._v("Điền đầy đủ các thông tin trên")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("feed_product_type")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.excelDownload.feed_product_type,
-                                      expression:
-                                        "excelDownload.feed_product_type"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.feed_product_type
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "feed_product_type",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("item_sku")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.excelDownload.item_sku,
-                                      expression: "excelDownload.item_sku"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.item_sku
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "item_sku",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("brand_name")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.excelDownload.brand_name,
-                                      expression: "excelDownload.brand_name"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.brand_name
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "brand_name",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("item_type")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.excelDownload.item_type,
-                                      expression: "excelDownload.item_type"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.item_type
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "item_type",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("quantity")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.excelDownload.quantity,
-                                      expression: "excelDownload.quantity"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.quantity
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "quantity",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("merchant_shipping_group_name")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.excelDownload
-                                          .merchant_shipping_group_name,
-                                      expression:
-                                        "excelDownload.merchant_shipping_group_name"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value:
-                                      _vm.excelDownload
-                                        .merchant_shipping_group_name
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "merchant_shipping_group_name",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "label",
-                                { staticClass: "control-label col-lg-2" },
-                                [_vm._v("part_number")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.excelDownload.part_number,
-                                      expression: "excelDownload.part_number"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: {
-                                    value: _vm.excelDownload.part_number
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.excelDownload,
-                                        "part_number",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "modal-footer" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-link",
-                            attrs: { type: "button", "data-dismiss": "modal" }
-                          },
-                          [_vm._v("Close")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "submit" }
-                          },
-                          [_vm._v("Save changes")]
                         )
                       ])
                     ]

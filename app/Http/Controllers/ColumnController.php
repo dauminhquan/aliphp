@@ -123,8 +123,15 @@ class ColumnController extends Controller
                 if($product != null)
                 {
                     $v = $column->product_column;
-                    $excel->value = $product->$v;
-                    $excel->update();
+                    if($v == null)
+                    {
+                        $excel->value = null;
+                    }
+                    else{
+
+                        $excel->value = $product->$v;
+                        $excel->update();
+                    }
                 }
                 else{
                     $excel->delete();

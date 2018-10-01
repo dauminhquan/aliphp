@@ -21,6 +21,8 @@ Route::delete('/destroy-products','ProductController@destroyMany');
 Route::resource('/columns','ColumnController');
 Route::resource('/templates','TemplateController');
 Route::get('/template-products/{id}','TemplateController@products');
+Route::get('/template-products/{id}/{product_id}','TemplateController@product');
+Route::put('/template-products/{id}/{product_id}','TemplateController@updateProduct');
 Route::post('/template-products','TemplateController@storeProduct');
 Route::delete('/template-products','TemplateController@destroyProduct');
 Route::delete('/delete-template-products','TemplateController@destroyManyProduct');

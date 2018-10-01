@@ -18,7 +18,6 @@
                     @clickedKeyItem="clickedKeyItem"
                     @changePerPage="changePerPage"
                     @changePageSelect="changePageSelect"
-
         >
             <div id="modal_danger" class="modal fade">
                 <div class="modal-dialog">
@@ -57,7 +56,7 @@
 
                         <div class="modal-body">
 
-                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
+                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
                             <div style="border: snow" class="panel panel-body border-top-danger text-center">
                                 <div class="pace-demo" v-if="deleting == true">
                                     <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
@@ -111,24 +110,18 @@
                                 <fieldset class="content-group">
                                     <legend class="text-bold ">Các thông tin</legend>
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2 text-bold" >Tên template</label>
+                                        <label class="control-label col-lg-2 text-bold" >Danh sách các thông tin</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" required v-model="info.name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-2 text-bold" >Danh sách các cột</label>
-                                        <div class="col-lg-10">
-                                            <div class="form-group" v-for="column in info.columns" @key="column.id">
+                                            <div class="form-group" v-for="column in templateColumns" @key="column.id">
                                                 <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <select class="form-control" required :value="column.id">
-                                                            <option v-for="c in cls" :key="c.id" :value="c.id">
-                                                                {{c.name}}
-                                                            </option>
-                                                        </select>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" class="form-control" readonly :value="column.name">
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" v-model="info[column.name]">
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +130,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Lưu thông tin cột</button>
+                                <button type="submit" class="btn btn-primary">Update thông tin</button>
                             </div>
                         </form>
 
@@ -161,6 +154,60 @@
                     </div>
                 </div>
             </div>
+            <div id="modal-export-excel" class="modal fade">
+                <div class="modal-dialog modal-full">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h5 class="modal-title">Thông tin chi tiết sản phẩm</h5>
+                        </div>
+                        <form class="form-horizontal" @submit.prevent="exportExcel">
+                            <div class="modal-body">
+                                <fieldset class="content-group">
+                                    <legend class="text-bold ">Các thông tin</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold" >Danh sách các cột thông tin chung</label>
+                                        <div class="col-lg-10">
+                                            <div class="form-group" v-for="i in columnCommon" :key="i">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <select class="form-control" @change="setCommonData(i,$event)">
+                                                            <option ></option>
+                                                            <option value="" v-for="column in templateColumns" @key="column.id"  :value="column.id" >{{column.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" placeholder="Nhập giá trị" @change="setCommonData(i,null,$event)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold" >Thứ tự xuất</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" required v-model="indexExportExcel"></textarea>
+                                        </div>
+                                        <p>Định dạng colum1;colum2;column3;...</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold" >Thêm cột</label>
+                                        <button type="button" class="btn btn-success" @click="columnCommon++;commonData.push({key: '',value:''})" ><i class="icon-add-to-list"></i> Thêm một cột</button>
+                                        <button type="button" class="btn btn-danger" @click="columnCommon--;commonData.pop()" ><i class="icon-trash"></i> Xóa cột cuối</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary"><i class="icon-file-download"></i> Xuất Excel</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
         </data-table>
     </div>
 </template>
@@ -168,7 +215,6 @@
     import table from './../../components/datatable/table'
     import modalProducts from './products/products'
     import axios from 'axios'
-
     export default {
         props: ['templateId'],
         computed:{
@@ -193,6 +239,13 @@
         },
         data(){
             return {
+                commonData: [
+                    {
+                        key: '',
+                        value: '',
+                    }
+                ],
+                columnCommon: 1,
                 showProducts: true,
                 textAddProduct: '',
                 columns : [
@@ -204,6 +257,14 @@
                         action: function(e, dt, node, config) {
 
                             $('#modal-products').modal('show')
+                        }
+                    },
+                    {
+                        text: 'Xuất Excel',
+                        className: 'btn bg-info',
+                        action: function(e, dt, node, config) {
+
+                            $('#modal-export-excel').modal('show')
                         }
                     }
                 ],
@@ -237,14 +298,35 @@
                     columns: []
                 },
                 cls: [],
-                row_length : 1
+                row_length : 1,
+                templateColumns: [],
+                indexExportExcel: ''
             }
         },
         mounted(){
             this.getData()
+            this.getColumns()
         },
         methods: {
+            setCommonData(i,key,value){
 
+                if(key != null)
+                {
+                    this.commonData[i-1].key = key.target.value
+                }
+                if(value != null)
+                {
+                    this.commonData[i-1].value = value.target.value
+                }
+            },
+            getColumns(){
+                axios.get('/api/templates/'+this.templateId).then(data => {
+                    this.templateColumns = data.data.columns
+                }).catch(err => {
+                    console.log(err)
+                    alert('Đã có lỗ. Vui lòng báo với DEV')
+                })
+            },
             setRows(e){
                 this.create.columns.push(event.target.value)
             },
@@ -258,7 +340,7 @@
                             text: 'ID'
                         },
                         {
-                            key:'name',
+                            key:'item_name',
                             text: 'Tên sản phẩm'
                         },
                         {
@@ -272,16 +354,30 @@
                     alert('Có lỗi xảy ra ! Vui lòng báo lại với dev')
                 })
             },
+            exportExcel(){
+                let url = '/export-excel/'+this.templateId+'?'
+                let vm = this
+                    this.commonData.forEach( i => {
+                        if(i.key!= '' && i.value != '')
+                        {
+                            let keyO = vm.templateColumns.find(item => {
+                                return item.id == i.key
+                            })
+                            url+=keyO.name+'='+i.value+'&'
 
+                        }
+                    })
+                url+='indexexport='+vm.indexExportExcel
+                    window.open(url,'_blank')
+            },
             updateItem(){
                 let vm = this
                 vm.waiting =true
-                axios.put(`/api/templates/${vm.info.id}`,vm.info).then(data=>{
+                axios.put(`/api/template-products/${vm.templateId}/${vm.info.id}`,vm.info).then(data=>{
                     vm.getData()
                     alert('Thành công')
-                    vm.waiting =false
-                    $('#info-column').modal('hide')
-
+                    vm.waiting = false
+                    $('#info-product').modal('hide')
                 }).catch(err=> {
                     vm.waiting =false
                     alert('Thất bại! Vui lòng báo với developer')
@@ -499,12 +595,12 @@
                 return result
             },
             showItem(id) {
-                this.getTemplateInfo(id)
-                $('#info-template').modal('show')
+                this.getProductInfo(id)
+                $('#info-product').modal('show')
             },
-            getTemplateInfo(id){
+            getProductInfo(id){
                 let vm = this
-                axios.get(`/api/templates/${id}`).then(data => {
+                axios.get(`/api/template-products/${vm.templateId}/${id}`).then(data => {
 
 
                     vm.info = data.data

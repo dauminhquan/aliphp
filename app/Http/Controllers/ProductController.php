@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Excel;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -29,12 +31,6 @@ class ProductController extends Controller
         else {
             $products = Product::paginate(500);
         }
-        /*foreach ($products as $product)
-        {
-            $product->sizes = $product->sizes;
-            $product->colors = $product->colors;
-            $product->category = $product->category;
-        }*/
         return $products;
     }
 
@@ -56,7 +52,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-//        return $request->all();
         $data = (array)$request->all();
         $data['item_sku'] = strtoupper(Str::random(10));
         while (Product::where('item_sku',$data['item_sku'])->first() != null)
@@ -125,7 +120,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
         $product->delete();
+        Excel::where('product_id',$product->id)->delete();
+        DB::table('template_products')->where('product_id',$product->id)->delete();
         return $product;
     }
     public function destroies(Request $request){
@@ -134,6 +132,8 @@ class ProductController extends Controller
         {
             $_product = Product::findOrFail($product['id']);
             $_product->delete();
+            Excel::where('product_id',$product['id'])->delete();
+            DB::table('template_products')->where('product_id',$product['id'])->delete();
         }
         return $products;
     }

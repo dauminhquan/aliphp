@@ -57,7 +57,7 @@
 
                         <div class="modal-body">
 
-                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
+                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
                             <div style="border: snow" class="panel panel-body border-top-danger text-center">
                                 <div class="pace-demo" v-if="deleting == true">
                                     <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
@@ -97,7 +97,7 @@
                                         <div class="col-lg-10">
                                             <select  class="form-control" v-model="info.product_column">
                                                 <option :value="null"></option>
-                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{product_column}}</option>
+                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                                         <div class="col-lg-10">
                                             <select  class="form-control" v-model="create.product_column">
                                                 <option :value="null"></option>
-                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{product_column}}</option>
+                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -171,7 +171,7 @@
                                         <label class="control-label col-lg-2 text-bold" >Tên cột</label>
                                         <div class="col-lg-10">
                                             <textarea type="text" rows="5" class="form-control" v-model="list_columns" required></textarea>
-                                            <p> Mãu: <span class="text-bold">cot1:ten_cot_san_pham1;cot2:ten_cot_san_pham2;cot3:ten_cot_san_pham3;...</span></p>
+                                            <p> Mẫu: <span class="text-bold">cot1:ten_cot_san_pham1;cot2:ten_cot_san_pham2;cot3:ten_cot_san_pham3;...</span></p>
                                         </div>
 
                                     </div>
@@ -195,7 +195,7 @@
 <script>
     import table from './../../components/datatable/table'
     import axios from 'axios'
-
+    import trans from './../config'
     export default {
         computed:{
             setAll(){
@@ -254,7 +254,8 @@
                 waiting: false,
                 create: {},
                 product_columns: [],
-                list_columns: ''
+                list_columns: '',
+                trans: trans
             }
         },
         mounted(){

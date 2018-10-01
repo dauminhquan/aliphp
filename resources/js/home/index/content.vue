@@ -57,7 +57,7 @@
 
                         <div class="modal-body">
 
-                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều sinh viên. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
+                            <p> <i class="icon-warning"></i> Bạn đang xóa nhiều item. Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
                             <div style="border: snow" class="panel panel-body border-top-danger text-center">
                                 <div class="pace-demo" v-if="deleting == true">
                                     <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
@@ -181,86 +181,6 @@
                     </div>
                 </div>
             </div>
-            <div id="download-excel" class="modal fade">
-                <div class="modal-dialog modal-full">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h5 class="modal-title">Tải xuống Excel</h5>
-                        </div>
-                        <form @submit.prevent="opentableDownloadExcel">
-                            <div class="modal-body">
-                                <fieldset class="content-group">
-                                    <legend class="text-bold">Điền đầy đủ các thông tin trên</legend>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">feed_product_type</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.feed_product_type">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">item_sku</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.item_sku">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">brand_name</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.brand_name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">item_type</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.item_type">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">quantity</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.quantity">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">merchant_shipping_group_name</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.merchant_shipping_group_name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <label class="control-label col-lg-2">part_number</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" required v-model="excelDownload.part_number">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </data-table>
     </div>
 </template>
@@ -289,21 +209,6 @@
                 columns : [
                 ],
                 buttonConfig: [
-                    {
-                        text: 'Thêm mới',
-                        className: 'btn bg-primary',
-                        action: function(e, dt, node, config) {
-
-                            // window.open(window._config.WEB_ADMIN_STUDENTS+'/create')
-                        }
-                    },
-                    {
-                        text: 'Tải xuống Excel',
-                        className: 'btn bg-info',
-                        action: function(e, dt, node, config) {
-                            $('#download-excel').modal('show')
-                        }
-                    }
                 ],
                 deleting: false,
                 data :[],
