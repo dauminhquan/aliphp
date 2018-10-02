@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Products of Aliexpress</title>
-    <link href="{{asset('assets/images/favicon.ico')}}" rel="shortcut icon" type="image/x-icon">
+    <link href="{{asset('images/favicon.ico')}}" rel="shortcut icon" type="image/x-icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="{{asset("css/common.css")}}" rel="stylesheet" type="text/css">
@@ -16,7 +16,7 @@
 <!-- Main navbar -->
 <div class="navbar navbar-inverse">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>
+        <a class="navbar-brand" href="#"><i class="icon-search4"></i> Amazon Team</a>
 
         <ul class="nav navbar-nav visible-xs-block">
             <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -27,84 +27,6 @@
     <div class="navbar-collapse collapse" id="navbar-mobile">
         <ul class="nav navbar-nav">
             <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
-
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-git-compare"></i>
-                    <span class="visible-xs-inline-block position-right">Git updates</span>
-                    <span class="badge bg-warning-400">9</span>
-                </a>
-
-                <div class="dropdown-menu dropdown-content">
-                    <div class="dropdown-content-heading">
-                        Git updates
-                        <ul class="icons-list">
-                            <li><a href="#"><i class="icon-sync"></i></a></li>
-                        </ul>
-                    </div>
-
-                    <ul class="media-list dropdown-content-body width-350">
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-pull-request"></i></a>
-                            </div>
-
-                            <div class="media-body">
-                                Drop the IE <a href="#">specific hacks</a> for temporal inputs
-                                <div class="media-annotation">4 minutes ago</div>
-                            </div>
-                        </li>
-
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="#" class="btn border-warning text-warning btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-commit"></i></a>
-                            </div>
-
-                            <div class="media-body">
-                                Add full font overrides for popovers and tooltips
-                                <div class="media-annotation">36 minutes ago</div>
-                            </div>
-                        </li>
-
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-branch"></i></a>
-                            </div>
-
-                            <div class="media-body">
-                                <a href="#">Chris Arney</a> created a new <span class="text-semibold">Design</span> branch
-                                <div class="media-annotation">2 hours ago</div>
-                            </div>
-                        </li>
-
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="#" class="btn border-success text-success btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-merge"></i></a>
-                            </div>
-
-                            <div class="media-body">
-                                <a href="#">Đậu Quân</a> merged <span class="text-semibold">Master</span> and <span class="text-semibold">Dev</span> branches
-                                <div class="media-annotation">Dec 18, 18:36</div>
-                            </div>
-                        </li>
-
-                        <li class="media">
-                            <div class="media-left">
-                                <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i class="icon-git-pull-request"></i></a>
-                            </div>
-
-                            <div class="media-body">
-                                Have Carousel ignore keyboard events
-                                <div class="media-annotation">Dec 12, 05:46</div>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="dropdown-content-footer">
-                        <a href="#" data-popup="tooltip" title="All activity"><i class="icon-menu display-block"></i></a>
-                    </div>
-                </div>
-            </li>
         </ul>
 
         <p class="navbar-text">
@@ -113,83 +35,18 @@
 
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-people"></i>
-                        <span class="visible-xs-inline-block position-right">Users</span>
-                    </a>
 
-                    <div class="dropdown-menu dropdown-content">
-                        <div class="dropdown-content-heading">
-                            Users online
-                            <ul class="icons-list">
-                                <li><a href="#"><i class="icon-gear"></i></a></li>
-                            </ul>
-                        </div>
-
-                        <ul class="media-list dropdown-content-body width-300">
-                            <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Jordana Ansley</a>
-                                    <span class="display-block text-muted text-size-small">Lead web developer</span>
-                                </div>
-                                <div class="media-right media-middle"><span class="status-mark border-success"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Will Brason</a>
-                                    <span class="display-block text-muted text-size-small">Marketing manager</span>
-                                </div>
-                                <div class="media-right media-middle"><span class="status-mark border-danger"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Hanna Walden</a>
-                                    <span class="display-block text-muted text-size-small">Project manager</span>
-                                </div>
-                                <div class="media-right media-middle"><span class="status-mark border-success"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Dori Laperriere</a>
-                                    <span class="display-block text-muted text-size-small">Business developer</span>
-                                </div>
-                                <div class="media-right media-middle"><span class="status-mark border-warning-300"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
-                                <div class="media-body">
-                                    <a href="#" class="media-heading text-semibold">Vanessa Aurelius</a>
-                                    <span class="display-block text-muted text-size-small">UX expert</span>
-                                </div>
-                                <div class="media-right media-middle"><span class="status-mark border-grey-400"></span></div>
-                            </li>
-                        </ul>
-
-                        <div class="dropdown-content-footer">
-                            <a href="#" data-popup="tooltip" title="All users"><i class="icon-menu display-block"></i></a>
-                        </div>
-                    </div>
-                </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-bubbles4"></i>
-                        <span class="visible-xs-inline-block position-right">Messages</span>
+                        <i class="icon-file-text"></i>
+                        <span class="visible-xs-inline-block position-right">Logs</span>
                         <span class="badge bg-warning-400">2</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-content width-350">
                         <div class="dropdown-content-heading">
-                            Messages
+                            Logs
                             <ul class="icons-list">
                                 <li><a href="#"><i class="icon-compose"></i></a></li>
                             </ul>
@@ -198,7 +55,7 @@
                         <ul class="media-list dropdown-content-body">
                             <li class="media">
                                 <div class="media-left">
-                                    <img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
+                                    <img src="data:image/png;base64,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" class="img-circle img-sm" alt="">
                                     <span class="badge bg-danger-400 media-badge">5</span>
                                 </div>
 
@@ -214,7 +71,7 @@
 
                             <li class="media">
                                 <div class="media-left">
-                                    <img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
+                                    <img src="data:image/png;base64,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" class="img-circle img-sm" alt="">
                                     <span class="badge bg-danger-400 media-badge">4</span>
                                 </div>
 
@@ -229,7 +86,7 @@
                             </li>
 
                             <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                                <div class="media-left"><img src="data:image/png;base64,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" class="img-circle img-sm" alt=""></div>
                                 <div class="media-body">
                                     <a href="#" class="media-heading">
                                         <span class="text-semibold">Jeremy Victorino</span>
@@ -241,7 +98,7 @@
                             </li>
 
                             <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                                <div class="media-left"><img src="data:image/png;base64,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" class="img-circle img-sm" alt=""></div>
                                 <div class="media-body">
                                     <a href="#" class="media-heading">
                                         <span class="text-semibold">Beatrix Diaz</span>
@@ -253,7 +110,7 @@
                             </li>
 
                             <li class="media">
-                                <div class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+                                <div class="media-left"><img src="data:image/png;base64,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" class="img-circle img-sm" alt=""></div>
                                 <div class="media-body">
                                     <a href="#" class="media-heading">
                                         <span class="text-semibold">Richard Vango</span>
@@ -266,14 +123,14 @@
                         </ul>
 
                         <div class="dropdown-content-footer">
-                            <a href="#" data-popup="tooltip" title="All messages"><i class="icon-menu display-block"></i></a>
+                            <a href="#" data-popup="tooltip" title="Tất cả logs"><i class="icon-menu display-block"></i></a>
                         </div>
                     </div>
                 </li>
 
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="assets/images/placeholder.jpg" alt="">
+                        <img src="data:image/png;base64,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" alt="">
                         <span>{{Auth::user()->name}}</span>
                         <i class="caret"></i>
                     </a>
@@ -304,11 +161,11 @@
                 <div class="sidebar-user">
                     <div class="category-content">
                         <div class="media">
-                            <a href="#" class="media-left"><img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
+                            <a href="#" class="media-left"><img src="data:image/png;base64,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" class="img-circle img-sm" alt=""></a>
                             <div class="media-body">
-                                <span class="media-heading text-semibold">Victoria Baker</span>
+                                <span class="media-heading text-semibold">{{Auth::user()->name}}</span>
                                 <div class="text-size-mini text-muted">
-                                    <i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+                                    <i class="icon-pin text-size-small"></i> &nbsp;Hà Nội, Việt Nam
                                 </div>
                             </div>
 
@@ -357,6 +214,7 @@
 
 <script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('js/common.js')}}"></script>
+<script src="{{asset('js/plugins/select2.min.js')}}"></script>
 @section('script')
     @show
 

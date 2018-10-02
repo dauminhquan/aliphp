@@ -29,14 +29,12 @@
                         </div>
 
                         <div class="modal-body">
-
                             <p> <i class="icon-warning"></i> Sau khi xóa, mọi dữ liệu liên quan sẽ bị xóa. Bạn nên cân nhắc điều này ! </p>
                             <div style="border: snow" class="panel panel-body border-top-danger text-center">
                                 <div class="pace-demo" v-if="deleting == true">
                                     <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="modal-footer">
@@ -95,10 +93,10 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Tên cột trong bảng sản phẩm</label>
                                         <div class="col-lg-10">
-                                            <select  class="form-control" v-model="info.product_column">
-                                                <option :value="null"></option>
-                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>
-                                            </select>
+                                            <select2  class="form-control" v-model="info.product_column" :options="product_columns">
+                                               <!-- <option :value="null"></option>
+                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>-->
+                                            </select2>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -135,10 +133,10 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Tên cột trong bảng sản phẩm</label>
                                         <div class="col-lg-10">
-                                            <select  class="form-control" v-model="create.product_column">
-                                                <option :value="null"></option>
-                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>
-                                            </select>
+                                            <select2  class="form-control" v-model="create.product_column" :options="product_columns">
+                                                <!--<option :value="null"></option>
+                                                <option v-for="product_column in product_columns" @key="product_column" :value="product_column">{{trans.find(product_column)}}</option>-->
+                                            </select2>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -184,8 +182,6 @@
                                 <button type="submit" class="btn btn-primary">Thêm cột</button>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
@@ -196,6 +192,7 @@
     import table from './../../components/datatable/table'
     import axios from 'axios'
     import trans from './../config'
+    import select2 from './../../components/select2/select2'
     export default {
         computed:{
             setAll(){
@@ -203,7 +200,8 @@
             },
         },
         components: {
-            'data-table' : table
+            'data-table' : table,
+            'select2' : select2
         },
         data(){
             return {
@@ -259,6 +257,7 @@
             }
         },
         mounted(){
+            $('select').select2()
             this.getData()
             this.getProductColumns()
         },

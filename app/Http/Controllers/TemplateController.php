@@ -7,6 +7,7 @@ use App\Product;
 use App\Template;
 use App\TemplateColumn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TemplateController extends Controller
 {
@@ -43,6 +44,11 @@ class TemplateController extends Controller
     {
             $template = Template::findOrFail($id);
             $template->products = $template->products;
+            foreach ($template->products as $product)
+            {
+                $dt = DB::table('template_products')->where('product_id',$product->id)->where('template_id',$template->id)->first();
+                $product->exported = $dt->exported == 0? 'Chưa xuất Excel' : 'Đã xuất Excel';
+            }
             return $template;
     }
     public function product($id,$product_id){
@@ -76,17 +82,17 @@ class TemplateController extends Controller
     public function storeProduct(Request $request)
     {
         $template = Template::findOrFail($request->template_id);
+        $columns = $template->columns;
         $ids = $request->products_id;
         foreach ($ids as $i)
         {
             $product = Product::findOrFail($i);
-            $template->products()->attach($product->id);
-            $columns = $template->columns;
+            $template->products()->attach($i);
             foreach ($columns as $column)
             {
                 $excel = new Excel();
                 $excel->template_id = $template->id;
-                $excel->product_id = $product->id;
+                $excel->product_id = $i;
                 $excel->column_id = $column->id;
                 $cl = $column->product_column;
                 $excel->value = $product->$cl;

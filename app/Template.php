@@ -13,4 +13,7 @@ class Template extends Model
     public function products(){
         return $this->belongsToMany(Product::class,'template_products');
     }
+    public function productsWillExport(){
+        return $this->belongsToMany(Product::class,'template_products')->where('exported',false);
+    }
 }

@@ -101,11 +101,11 @@
                                             <div class="form-group" v-for="column in info.columns" @key="column">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <select class="form-control" required :value="column" @change="changeInfo(column,$event)">
-                                                            <option v-for="c in cls" :key="c.id" :value="c.id">
+                                                        <select2 class="form-control" :options="cls" required :value="column" @input="changeInfo(column,$event)">
+                                                            <!--<option v-for="c in cls" :key="c.id" :value="c.id">
                                                                 {{c.name}}
-                                                            </option>
-                                                        </select>
+                                                            </option>-->
+                                                        </select2>
                                                     </div>
                                                     <div class="col-lg-2">
                                                         <button type="button" class="btn btn-danger" @click="removeColumn(column)"><i class="icon-trash"></i> Xóa</button>
@@ -122,11 +122,11 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <select class="form-control"  v-model="valueAddToInfo">
-                                                            <option v-for="c in cls" :key="c.id" :value="c.id">
+                                                        <select2 class="form-control" :options="cls"  @input="valueAddToInfo = $event">
+                                                            <!--<option v-for="c in cls" :key="c.id" :value="c.id">
                                                                 {{c.name}}
-                                                            </option>
-                                                        </select>
+                                                            </option>-->
+                                                        </select2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,10 +170,10 @@
                                                         <input type="text" class="form-control" :value="getNameColumn(column)" readonly>
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <select name="" class="form-control" :value="getProductColumnName(column)" @change="changeColumn(column,$event)">
-                                                            <option></option>
-                                                            <option v-for="cl in productColumns" :key="cl" :value="cl">{{trans.find(cl)}}</option>
-                                                        </select>
+                                                        <select1 name="" class="form-control" :value="getProductColumnName(column)" :options="productColumns" :hasNull="true" @change="changeColumn(column,$event)">
+                                                            <!--<option></option>
+                                                            <option v-for="cl in productColumns" :key="cl" :value="cl">{{trans.find(cl)}}</option>-->
+                                                        </select1>
                                                     </div>
 
                                                 </div>
@@ -256,6 +256,8 @@
     import table from './../../components/datatable/table'
     import axios from 'axios'
     import trans from './../config'
+    import select1 from './../../components/select2/select2'
+    import select2 from './../template/components/select2/select2'
     export default {
         computed:{
             setAll(){
@@ -264,7 +266,9 @@
 
         },
         components: {
-            'data-table' : table
+            'data-table' : table,
+            'select1': select1,
+            'select2' : select2
         },
         data(){
             return {
@@ -342,13 +346,13 @@
                 this.allColumns.forEach(item => {
                     if(item.id == id)
                     {
-                        item.product_column = e.target.value
+                        item.product_column = e
                     }
                 })
                 this.waitingChangeClumn = true
                 let vm = this
                 axios.put(`/api/columns/${id}`,{
-                    product_column: e.target.value
+                    product_column: e
                 }).then(data => {
                     setTimeout(function () {
                         vm.waitingChangeClumn = false
@@ -408,7 +412,7 @@
                 let vm = this
                 let n = 0
                 vm.info.columns.forEach(i => {
-                    if(i == event.target.value)
+                    if(i == event)
                     {
                         n++
                     }
@@ -423,7 +427,7 @@
                 {
                     if(vm.info.columns[i] == id)
                     {
-                        vm.info.columns[i] = event.target.value
+                        vm.info.columns[i] = event
                     }
                 }
             },

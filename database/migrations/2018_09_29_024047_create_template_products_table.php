@@ -17,6 +17,7 @@ class CreateTemplateProductsTable extends Migration
             $table->increments('id');
             $table->integer('product_id');
             $table->integer('template_id');
+            $table->boolean('exported')->default(false);
             $table->timestamps();
         });
     }

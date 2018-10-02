@@ -35,11 +35,12 @@ class HomeController extends Controller
 
         $template = Template::findOrFail($id);
         $columns = explode(';',$request->indexexport);
-        $products = $template->products;
+        $products = $template->productsWillExport;
         $data = [];
+        $dbColumns = Column::get();
         foreach ($products as $product)
         {
-
+            $ps =  ExcelModel::where('template_id',$template->id)->where('product_id',$product->id)->get();
             foreach ($columns as $column)
             {
                 if(in_array($column,$keys))
@@ -49,9 +50,24 @@ class HomeController extends Controller
                 }
                 else{
                     try{
-                        $column = Column::where('name',$column)->first();
-                        $p =  ExcelModel::where('template_id',$template->id)->where('product_id',$product->id)->where('column_id',$column->id)->first();
-                        $d[$column->name] = $p->value;
+                        foreach ($dbColumns as $cl)
+                        {
+                            if($cl->name == $column)
+                            {
+                                $column = $cl;
+                                break;
+                            }
+                        }
+                        foreach ($ps as $p)
+                        {
+                            if($p->column_id == $column->id)
+                            {
+                                $d[$column->name] = $p->value;
+                                break;
+                            }
+                        }
+                        /*$p =  ExcelModel::where('template_id',$template->id)->where('product_id',$product->id)->where('column_id',$column->id)->first();*/
+
                     }catch (\Exception $exception){
                         dd($template->id,$product->id,$column->id);
                     }

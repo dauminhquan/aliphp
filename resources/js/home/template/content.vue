@@ -171,10 +171,10 @@
                                             <div class="form-group" v-for="i in columnCommon" :key="i">
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        <select class="form-control" @change="setCommonData(i,$event)">
-                                                            <option ></option>
-                                                            <option value="" v-for="column in templateColumns" @key="column.id"  :value="column.id" >{{column.name}}</option>
-                                                        </select>
+                                                        <select2 class="form-control" :options="templateColumns" @input="setCommonData(i,$event)">
+                                                            <!--<option ></option>-->
+                                                            <!--<option value="" v-for="column in templateColumns" @key="column.id"  :value="column.id" >{{column.name}}</option>-->
+                                                        </select2>
                                                     </div>
                                                     <div class="col-lg-8">
                                                         <input type="text" class="form-control" placeholder="Nhập giá trị" @change="setCommonData(i,null,$event)">
@@ -215,6 +215,7 @@
     import table from './../../components/datatable/table'
     import modalProducts from './products/products'
     import axios from 'axios'
+    import select2 from './components/select2/select2'
     export default {
         props: ['templateId'],
         computed:{
@@ -235,7 +236,8 @@
         },
         components: {
             'data-table' : table,
-            'modal-products': modalProducts
+            'modal-products': modalProducts,
+            'select2': select2
         },
         data(){
             return {
@@ -312,7 +314,8 @@
 
                 if(key != null)
                 {
-                    this.commonData[i-1].key = key.target.value
+                    // console.log(key)
+                    this.commonData[i-1].key = key
                 }
                 if(value != null)
                 {
@@ -346,6 +349,10 @@
                         {
                             key: 'branch_aliexpress',
                             text: 'Nhánh trên Aliexpress'
+                        },
+                        {
+                            key:'exported',
+                            text: 'Tình trạng xuất Excel'
                         }
 
                     ]
