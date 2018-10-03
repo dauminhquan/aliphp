@@ -170,7 +170,7 @@
                                                         <input type="text" class="form-control" :value="getNameColumn(column)" readonly>
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <select1 name="" class="form-control" :value="getProductColumnName(column)" :options="productColumns" :hasNull="true" @change="changeColumn(column,$event)">
+                                                        <select1 name="" class="form-control" :value="getProductColumnName(column)" :options="productColumns" :hasNull="true" @input="changeColumn(column,$event)">
                                                             <!--<option></option>
                                                             <option v-for="cl in productColumns" :key="cl" :value="cl">{{trans.find(cl)}}</option>-->
                                                         </select1>
@@ -343,6 +343,7 @@
         methods: {
             changeColumn(id,e)
             {
+                console.log(e)
                 this.allColumns.forEach(item => {
                     if(item.id == id)
                     {

@@ -3,7 +3,8 @@ const categoryUrl = [
 ];
 const productUrl = [
     'store/product/',
-    'aliexpress.com/item'
+    'aliexpress.com/item',
+    'aliexpress.com/w/'
 ];
 const urlGetRating = 'https://feedback.aliexpress.com/display/evaluationDsrAjaxService.htm?ownerAdminSeq=';
 const urlGetShiper  = (productId,count=1,minPrice,maxPrice) => {
