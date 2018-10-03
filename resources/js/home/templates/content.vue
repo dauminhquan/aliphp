@@ -93,7 +93,6 @@
                                         <div class="col-lg-8">
                                             <input type="text" class="form-control" required v-model="info.name">
                                         </div>
-
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Danh sách các cột</label>
@@ -159,12 +158,17 @@
                         </div>
                         <form class="form-horizontal" @submit.prevent="updateItem">
                             <div class="modal-body">
-                                <fieldset class="content-group">
+
+                                <div style="border: snow" class="panel panel-body border-top-danger text-center">
+                                    <div class="pace-demo" v-if="turnOff == true">
+                                        <div class="theme_xbox_xs"><div class="pace_progress" data-progress-text="60%" data-progress="60"></div><div class="pace_activity"></div></div>
+                                    </div>
+                                </div>
+                                <fieldset class="content-group" v-if="turnOff == false">
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Danh sách các cột</label>
-
                                         <div class="col-lg-10">
-                                            <div class="form-group" v-for="column in info.columns" @key="column">
+                                            <div class="form-group" v-for="column in infoColumns" @key="column">
                                                 <div class="row">
                                                     <div class="col-lg-5">
                                                         <input type="text" class="form-control" :value="getNameColumn(column)" readonly>
@@ -272,6 +276,7 @@
         },
         data(){
             return {
+                turnOff: false,
                 waitingChangeClumn: false,
                 trans: trans,
                 addColumn: 0,
@@ -331,7 +336,8 @@
                 row_length : 1,
                 valueAddToInfo: null,
                 productColumns: [],
-                allColumns: []
+                allColumns: [],
+                infoColumns: []
             }
         },
         mounted(){
@@ -341,9 +347,9 @@
             this.getAllColumns()
         },
         methods: {
-            changeColumn(id,e)
+            changeColumn(id,e,option)
             {
-                console.log(e)
+
                 this.allColumns.forEach(item => {
                     if(item.id == id)
                     {
@@ -371,7 +377,6 @@
             },
             getProductColumnName(id){
                 let vm = this
-
                 if(vm.allColumns.length > 0)
                 {
                     let c = vm.allColumns.find(item => {
@@ -411,18 +416,7 @@
             },
             changeInfo(id,event){
                 let vm = this
-                let n = 0
-                vm.info.columns.forEach(i => {
-                    if(i == event)
-                    {
-                        n++
-                    }
-                })
 
-                if(n >=1)
-                {
-                    alert('Cột đã tồn tại rồi')
-                }
 
                 for(let i = 0; i < vm.info.columns.length;i++)
                 {
@@ -433,23 +427,8 @@
                 }
             },
             addColumnToInfo(){
-
                 let vm = this
-                let n = 0
-                vm.info.columns.forEach(i => {
-                    if(i == vm.valueAddToInfo)
-                    {
-                        n++
-                    }
-                })
-
-                if(n >=1)
-                {
-                    alert('Cột đã tồn tại rồi')
-                }
-                else{
-                    this.info.columns.push(vm.valueAddToInfo)
-                }
+                this.info.columns.push(vm.valueAddToInfo)
 
             },
             removeColumnE(e){
@@ -584,7 +563,7 @@
                 }
                 if(event[1] == 'setting-columns')
                 {
-                    this.getTemplateInfo(event[0])
+                    this.getTemplateInfo1(event[0])
                     $('#setting-columns').modal('show')
                 }
             },
@@ -695,6 +674,22 @@
                     vm.info.columns = vm.info.columns.map(i => {
                         return i.id
                     })
+                }).catch(err => {
+                    console.log(err)
+                    alert('Có lỗi! Vui lòng báo cho developer')
+                })
+            },
+            getTemplateInfo1(id){
+                let vm = this
+                vm.turnOff =true
+                axios.get(`/api/templates/${id}`).then(data => {
+                    setTimeout(function () {
+                        vm.info = data.data
+                        vm.infoColumns = data.data.columns.map(i => {
+                            return i.id
+                        })
+                        vm.turnOff = false
+                    },1500)
                 }).catch(err => {
                     console.log(err)
                     alert('Có lỗi! Vui lòng báo cho developer')

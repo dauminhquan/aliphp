@@ -1,6 +1,6 @@
 <template>
     <select name="" id="">
-        <option v-if="hasNull == true">Chọn 1 mục</option>
+        <option v-if="hasNull == true" :value="null"></option>
         <option v-for="option in options" :key="option" :value="option">{{trans.find(option)}}</option>
     </select>
 </template>

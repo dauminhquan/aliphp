@@ -18,6 +18,9 @@ Route::resource('/products','ProductController')->middleware('cors');
 Route::delete('/destroy-products','ProductController@destroyMany');
 Route::resource('/columns','ColumnController');
 Route::resource('/templates','TemplateController');
+Route::resource('/keys','KeyController');
+Route::delete('/destroy-keys','KeyController@destroyMany');
+Route::post('/create-many-keys',['uses' => 'KeyController@storeMany']);
 Route::get('/template-products/{id}','TemplateController@products');
 Route::get('/template-products/{id}/{product_id}','TemplateController@product');
 Route::put('/template-products/{id}/{product_id}','TemplateController@updateProduct');
@@ -27,3 +30,4 @@ Route::delete('/delete-template-products','TemplateController@destroyManyProduct
 Route::get('/product-columns','OtherController@getProductColumns');
 Route::delete('/delete-many-columns',['uses' => 'ColumnController@destroyMany']);
 Route::post('/create-many-columns',['uses' => 'ColumnController@storeMany']);
+Route::resource('/resource-product-columns','ProductTableController');

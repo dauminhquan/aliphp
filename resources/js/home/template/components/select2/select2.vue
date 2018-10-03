@@ -1,6 +1,6 @@
 <template>
     <select name="" id="" placeholder="Chọn một mục">
-        <option v-if="hasNull == true">Để trống mục này</option>
+        <option v-if="hasNull == true"></option>
         <option v-for="option in options" :key="option.id" :value="option.id">{{option.name}}</option>
     </select>
 </template>

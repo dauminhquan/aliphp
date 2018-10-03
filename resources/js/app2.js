@@ -45,7 +45,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 {
                     window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
                 }
-            },40000)
+            },50000)
 
         }
     }
@@ -110,7 +110,8 @@ chrome.storage.local.get('statusTool', function (result) {
                         },
                         success: function (data) {
                             if(data.result == 1) {
-                                let price = highPrice
+
+                                let price = (parseFloat(highPrice) + parseFloat(data.priceShip)) * 2
 
                                 $.expr[':'].contains = function(a, i, m) {
                                     return jQuery(a).text().toUpperCase()
@@ -140,7 +141,12 @@ chrome.storage.local.get('statusTool', function (result) {
 
                                 for(let i = 0;i< liSizes.length;i++)
                                 {
-                                    sizes+=$(liSizes[i]).children('a:eq(0)').children('span:eq(0)').html()+';'
+                                    let s = $(liSizes[i]).children('a:eq(0)').children('span:eq(0)').html()
+                                    if(s != undefined)
+                                    {
+                                        sizes+=$(liSizes[i]).children('a:eq(0)').children('span:eq(0)').html()+';'
+                                    }
+
                                 }
 
 
@@ -186,20 +192,30 @@ chrome.storage.local.get('statusTool', function (result) {
                                     async:false
                                 })
                                 let specifics = $('.product-property-list:eq(0)').html()
+                                let specificsLis = $('.product-property-list:eq(0)').find('li:not(:contains(Brand Name))')
                                 let key_works = ''
-                                console.log(idProduct)
+                                let generic_keywords = []
+
                                 $.ajax({
                                     type:'get',
                                     url: 'https://www.aliexpress.com/seo/detailCrosslinkAjax.htm?productId='+idProduct,
                                     success: function (data) {
                                         let dom_nodes = $($.parseHTML(`<div>${data}</div>`));
                                         let keyworks_a = $(dom_nodes).find('a')
-
+                                        console.log(keyworks_a)
+                                        let max = 5
                                         for(let i = 0;i<keyworks_a.length; i++)
                                         {
-                                            if(i< 5)
+                                            if(i< max)
                                             {
-                                                key_works+=$(keyworks_a[i]).text()+';'
+                                                if(!generic_keywords.includes(keyworks_a[i].innerText))
+                                                {
+                                                    generic_keywords.push(keyworks_a[i].innerText)
+                                                    key_works+= keyworks_a[i].innerText+';'
+                                                }
+                                                else{
+                                                    max++
+                                                }
                                             }
                                         }
                                     },
@@ -210,26 +226,67 @@ chrome.storage.local.get('statusTool', function (result) {
                                     async:false
                                 })
 
-                                console.log(key_works,specifics,document.getElementsByClassName('ui-breadcrumb')[0].innerText)
+                                let dtPost = {
+                                    aliexpress_product_id: idProduct,
+                                    item_name:  $('h1.product-name')[0].innerHTML,
+                                    url_aliexpress: window.location.href,
+                                    product_description: description,
+                                    main_image_url: main_image,
+                                    swatch_image: '',
+                                    other_images: other_images,
+                                    sizes: sizes,
+                                    branch_aliexpress: document.getElementsByClassName('ui-breadcrumb')[0].innerText.replace('Back to search results ',''),
+                                    colors: colors,
+                                    specifics: specifics,
+                                    key_works: key_works,
+                                    standard_price: price
+                                }
+
+                                for(let i = 0;i< 5 ;i++)
+                                {
+                                    if(generic_keywords[i] == undefined)
+                                    {
+                                        dtPost['generic_keywords'+(i+1)] = ''
+                                    }
+                                    else {
+                                        dtPost['generic_keywords'+(i+1)] = generic_keywords[i]
+                                    }
+                                }
+                                for(let i=0;i<5;i++)
+                                {
+                                    if($(specificsLis).text() == undefined)
+                                    {
+                                        dtPost['bullet_point'+(i+1)] = ''
+                                    }
+                                    else {
+                                        dtPost['bullet_point'+(i+1)] = specificsLis[i].innerText
+                                    }
+                                }
+                                let other_images_array = other_images.split(';')
+                                for (let i = 0; i< 3 ;i++)
+                                {
+                                    if(other_images_array[i] == undefined)
+                                    {
+                                        if(i == 0)
+                                        {
+                                            dtPost['other_image_url'] = null
+                                        }
+                                        dtPost['other_image_url'+(i+1)] = null
+                                    }
+                                    else{
+                                        if(i == 0)
+                                        {
+                                            dtPost['other_image_url'] = other_images_array[i]
+                                        }
+                                        dtPost['other_image_url'+(i+1)] = other_images_array[i]
+                                    }
+                                }
+                                console.log(dtPost)
                                 $.ajax({
                                     url: 'http://localhost:3000/put/product',
                                     type: 'POST',
                                     data: {
-                                        data: JSON.stringify({
-                                            aliexpress_product_id: idProduct,
-                                            item_name:  $('h1.product-name')[0].innerHTML,
-                                            url_aliexpress: window.location.href,
-                                            product_description: description,
-                                            main_image_url: main_image,
-                                            swatch_image: '',
-                                            other_images: other_images,
-                                            sizes: sizes,
-                                            branch_aliexpress: document.getElementsByClassName('ui-breadcrumb')[0].innerText.replace('Back to search results ',''),
-                                            colors: colors,
-                                            specifics: specifics,
-                                            key_works: key_works,
-                                            standard_price: price
-                                        })
+                                        data: JSON.stringify(dtPost)
                                     },
                                     headers: {
                                         'Accept': 'application/json'

@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
 
-class Product extends Model
+class Key extends Model
 {
+    protected $fillable = ['key'];
 }

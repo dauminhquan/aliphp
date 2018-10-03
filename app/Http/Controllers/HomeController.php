@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Column;
+use App\Key;
 use App\Product;
 use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Excel as ExcelModel;
 class HomeController extends Controller
@@ -29,7 +31,9 @@ class HomeController extends Controller
         $template = Template::findOrFail($id);
         return view('template',['id' => $id]);
     }
-
+    public function keys(){
+        return view('keys');
+    }
     public function exportExcel(Request $request,$id){
         $keys = $request->keys();
 
@@ -47,6 +51,11 @@ class HomeController extends Controller
                 {
                     $key = $column;
                     $d[$key] = $request->$key;
+                }
+                else if($column == 'external_product_id'){
+                    $keyt = Key::first();
+                    $d[$column] =$keyt->key;
+                    $keyt->delete();
                 }
                 else{
                     try{
@@ -76,6 +85,8 @@ class HomeController extends Controller
             $data[] = $d;
         }
 //        dd($data);
+        DB::table('template_products')->where('template_id','=',$id)->where('exported','=',0)->update(['exported' => 1]);
+        ExcelModel::where('template_id',$id)->delete();
        return Excel::create('Filename', function($excel) use ($data) {
 
             // Set the title
@@ -94,6 +105,9 @@ class HomeController extends Controller
             });
         })->download('xlsx');
     }
+    public function productColumns(){
+        return view('product_columns');
+    }
     private function filter()
     {
         $data = [];
@@ -102,5 +116,9 @@ class HomeController extends Controller
             $data[$cl] = 'required';
         }
         return $data;
+    }
+
+    public function test(Request $request){
+
     }
 }

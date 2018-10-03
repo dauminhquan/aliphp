@@ -121,7 +121,6 @@
                                                         <input type="text" class="form-control" v-model="info[column.name]">
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -247,7 +246,7 @@
                         value: '',
                     }
                 ],
-                columnCommon: 1,
+                columnCommon: 0,
                 showProducts: true,
                 textAddProduct: '',
                 columns : [
@@ -337,6 +336,9 @@
                 var vm = this
                 axios.get(`/api/template-products/${vm.templateId}`).then(data => {
                     vm.data = data.data.products
+                    vm.data.forEach(item => {
+                        item.main_image_url_img = `<img style="max-width: 200px" src="${item.main_image_url}">`
+                    })
                     vm.columns = [
                         {
                             key: 'id',
@@ -349,6 +351,10 @@
                         {
                             key: 'branch_aliexpress',
                             text: 'Nhánh trên Aliexpress'
+                        },
+                        {
+                          key: 'main_image_url_img',
+                          text: 'Ảnh đại diện'
                         },
                         {
                             key:'exported',
@@ -481,7 +487,6 @@
                         if(indexOf != -1)
                         {
                             vm.data.splice(indexOf,1)
-                            alert('Thành công')
                         }
                         else
                         {

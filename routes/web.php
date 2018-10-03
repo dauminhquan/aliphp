@@ -18,7 +18,10 @@ Route::group(['middleware' => 'authentication'],function (){
     Route::get('/',['uses' => 'HomeController@index','as' => 'home']);
     Route::get('/columns',['uses' => 'HomeController@columns','as' => 'columns']);
     Route::get('/templates',['uses' => 'HomeController@templates','as' => 'templates']);
+    Route::get('/keys',['uses' => 'HomeController@keys','as' => 'keys']);
+    Route::get('/product-columns',['uses' => 'HomeController@productColumns','as' => 'product.columns']);
     Route::get('/template/{id}',['uses' => 'HomeController@template','as' => 'template']);
     Route::get('/export-excel/{id}',['uses' => 'HomeController@exportExcel','as' => 'export.excel']);
     Route::get('/logout',['uses' => 'AuthController@logout','as' => 'logout']);
+    Route::get('/test',['uses' => 'HomeController@test','as' => 'test']);
 });

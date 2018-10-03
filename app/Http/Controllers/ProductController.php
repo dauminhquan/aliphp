@@ -6,6 +6,7 @@ use App\Excel;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -58,7 +59,17 @@ class ProductController extends Controller
         {
             $data['item_sku'] = strtoupper(Str::random(10));
         }
-       $product = Product::create($data);
+        $columns = Schema::getColumnListing('products');
+        $product = new Product();
+            foreach ($data as $key=> $item)
+            {
+                if(in_array($key,$columns))
+                {
+                    $product->$key = $item;
+                }
+            }
+
+       $product->save();
        return $product;
     }
     public function destroyMany(Request $request){
@@ -133,7 +144,7 @@ class ProductController extends Controller
             $_product = Product::findOrFail($product['id']);
             $_product->delete();
             Excel::where('product_id',$product['id'])->delete();
-            DB::table('template_products')->where('product_id',$product['id'])->delete();
+            DB::table('template_products')->where('product_id','=',$product['id'])->delete();
         }
         return $products;
     }
