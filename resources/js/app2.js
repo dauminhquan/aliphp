@@ -30,22 +30,107 @@ chrome.storage.local.get('statusTool', function (result) {
         }
         return vars;
     }
+	
     if(config.checkCategoryUrl())
     {
+		console.log('ok')
         if(status == 1)
         {
-            let products = $('a.picRind')
+           
+            let listItem = $('#hs-list-items')
+			console.log(listItem)
+            let liListItem = $(listItem).find('li')
+
+            let dataProduct = []
+            let liAndProductId = []
+            for(let i = 0 ;i< liListItem.length;i++)
+            {
+
+                let productId = $(liListItem[i]).attr('qrdata')
+                if(productId != undefined)
+                {
+                    productId = productId.split('|')[1]
+                    liAndProductId.push({
+                        li: liListItem[i],
+                        productId: productId
+                    })
+                }
+
+
+                let pr = $(liListItem[i]).find('span[itemprop="price"]:eq(0)').text()
+
+                pr = pr.replace('US $','')
+
+                let prArr = pr.split('-')
+
+                let lPrice = null
+                let hPrice = null
+
+                if(prArr.length == 2)
+                {
+                    lPrice = parseFloat(prArr[0])
+                    hPrice = parseFloat(prArr[1])
+                }
+                else{
+                    lPrice = hPrice = parseFloat(prArr[0])
+                }
+
+                if(lPrice != null && hPrice != null && productId != undefined)
+                {
+                    dataProduct.push({
+                        lowPrice : lPrice,
+                        hightPrice : hPrice,
+                        productId: productId
+                    })
+                }
+            }
+            let lis = []
+			console.log(dataProduct)
+            if(dataProduct.length > 0)
+            {
+                $.ajax({
+                    url: 'http://localhost:3000/check-shiper',
+                    method: 'post',
+                    async: true,
+                    data: {
+                        products: JSON.stringify(dataProduct)
+                    },
+                    success: function (data) {
+                        let ids = data.productIds
+                        ids.forEach(i => {
+                            lis.push(liAndProductId.find(item => {
+                                return item.productId == i
+                            }))
+                        })
+                        lis.forEach(function (i) {
+                            window.open($(i.li).find('a.picRind:eq(0)').attr('href'),'_blank')
+                        })
+                        setTimeout(function () {
+                            if(status == 1)
+                            {
+                                window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
+                            }
+                        },40000)
+                    },
+                    error: function (err) {
+                        console.log(err)
+                        setTimeout(function () {
+                            if(status == 1)
+                            {
+                                window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
+                            }
+                        },40000)
+                    }
+                })
+            }
+            
+           /* let products = $('a.picRind')
             for (let i= 0;i<products.length;i++)
             {
                 window.open($(products[i]).attr('href'),'_blank')
-            }
+            }*/
 
-            setTimeout(function () {
-                if(status == 1)
-                {
-                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
-                }
-            },50000)
+
 
         }
     }

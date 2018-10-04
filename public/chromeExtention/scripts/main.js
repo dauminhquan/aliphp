@@ -10479,18 +10479,94 @@ chrome.storage.local.get('statusTool', function (result) {
         }
         return vars;
     }
+
     if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkCategoryUrl()) {
+        console.log('ok');
         if (status == 1) {
-            var products = $('a.picRind');
-            for (var i = 0; i < products.length; i++) {
-                window.open($(products[i]).attr('href'), '_blank');
+
+            var listItem = $('#hs-list-items');
+            console.log(listItem);
+            var liListItem = $(listItem).find('li');
+
+            var dataProduct = [];
+            var liAndProductId = [];
+            for (var i = 0; i < liListItem.length; i++) {
+
+                var productId = $(liListItem[i]).attr('qrdata');
+                if (productId != undefined) {
+                    productId = productId.split('|')[1];
+                    liAndProductId.push({
+                        li: liListItem[i],
+                        productId: productId
+                    });
+                }
+
+                var pr = $(liListItem[i]).find('span[itemprop="price"]:eq(0)').text();
+
+                pr = pr.replace('US $', '');
+
+                var prArr = pr.split('-');
+
+                var lPrice = null;
+                var hPrice = null;
+
+                if (prArr.length == 2) {
+                    lPrice = parseFloat(prArr[0]);
+                    hPrice = parseFloat(prArr[1]);
+                } else {
+                    lPrice = hPrice = parseFloat(prArr[0]);
+                }
+
+                if (lPrice != null && hPrice != null && productId != undefined) {
+                    dataProduct.push({
+                        lowPrice: lPrice,
+                        hightPrice: hPrice,
+                        productId: productId
+                    });
+                }
+            }
+            var lis = [];
+            console.log(dataProduct);
+            if (dataProduct.length > 0) {
+                $.ajax({
+                    url: 'http://localhost:3000/check-shiper',
+                    method: 'post',
+                    async: true,
+                    data: {
+                        products: JSON.stringify(dataProduct)
+                    },
+                    success: function success(data) {
+                        var ids = data.productIds;
+                        ids.forEach(function (i) {
+                            lis.push(liAndProductId.find(function (item) {
+                                return item.productId == i;
+                            }));
+                        });
+                        lis.forEach(function (i) {
+                            window.open($(i.li).find('a.picRind:eq(0)').attr('href'), '_blank');
+                        });
+                        setTimeout(function () {
+                            if (status == 1) {
+                                window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href');
+                            }
+                        }, 40000);
+                    },
+                    error: function error(err) {
+                        console.log(err);
+                        setTimeout(function () {
+                            if (status == 1) {
+                                window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href');
+                            }
+                        }, 40000);
+                    }
+                });
             }
 
-            setTimeout(function () {
-                if (status == 1) {
-                    window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href');
-                }
-            }, 50000);
+            /* let products = $('a.picRind')
+             for (let i= 0;i<products.length;i++)
+             {
+                 window.open($(products[i]).attr('href'),'_blank')
+             }*/
         }
     }
     if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].checkProductUrl()) {
@@ -10755,7 +10831,7 @@ chrome.storage.local.get('statusTool', function (result) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var categoryUrl = ['aliexpress.com/category', 'aliexpress.com/w/', 'aliexpress.com/af/'];
+var categoryUrl = ['aliexpress.com/category', 'aliexpress.com/w/', 'aliexpress.com/af/', 'aliexpress.com/wholesale'];
 var productUrl = ['store/product/', 'aliexpress.com/item'];
 var urlGetRating = 'https://feedback.aliexpress.com/display/evaluationDsrAjaxService.htm?ownerAdminSeq=';
 var urlGetShiper = function urlGetShiper(productId) {
