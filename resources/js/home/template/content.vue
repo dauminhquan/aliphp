@@ -167,32 +167,25 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Danh sách các cột thông tin chung</label>
                                         <div class="col-lg-10">
-                                            <div class="form-group" v-for="i in columnCommon" :key="i">
+                                            <div class="form-group" v-for="(cl,index) in commonData" :key="index">
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        <select2 class="form-control" :options="templateColumns" @input="setCommonData(i,$event)">
+                                                        <select2 class="form-control" :value="cl.key" :options="templateColumns" @input="cl.key = $event">
                                                             <!--<option ></option>-->
                                                             <!--<option value="" v-for="column in templateColumns" @key="column.id"  :value="column.id" >{{column.name}}</option>-->
                                                         </select2>
                                                     </div>
                                                     <div class="col-lg-8">
-                                                        <input type="text" class="form-control" placeholder="Nhập giá trị" @change="setCommonData(i,null,$event)">
+                                                        <input type="text" class="form-control" placeholder="Nhập giá trị" v-model="cl.value">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2 text-bold" >Thứ tự xuất</label>
-                                        <div class="col-lg-10">
-                                            <textarea class="form-control" required v-model="indexExportExcel"></textarea>
-                                        </div>
-                                        <p>Định dạng colum1;colum2;column3;...</p>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Thêm cột</label>
-                                        <button type="button" class="btn btn-success" @click="columnCommon++;commonData.push({key: '',value:''})" ><i class="icon-add-to-list"></i> Thêm một cột</button>
-                                        <button type="button" class="btn btn-danger" @click="columnCommon--;commonData.pop()" ><i class="icon-trash"></i> Xóa cột cuối</button>
+                                        <button type="button" class="btn btn-success" @click="commonData.push({key: '',value:''})" ><i class="icon-add-to-list"></i> Thêm một cột</button>
+                                        <button type="button" class="btn btn-danger" @click="commonData.pop()" ><i class="icon-trash"></i> Xóa cột cuối</button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </fieldset>
@@ -200,6 +193,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary"><i class="icon-file-download"></i> Xuất Excel</button>
+                                <button type="button" class="btn btn-info" @click="saveCommon"><i class="glyphicon glyphicon-save-file"></i> Lưu cột chung</button>
                             </div>
                         </form>
 
@@ -241,10 +235,6 @@
         data(){
             return {
                 commonData: [
-                    {
-                        key: '',
-                        value: '',
-                    }
                 ],
                 columnCommon: 0,
                 showProducts: true,
@@ -277,6 +267,10 @@
                         html:'<a href="javascript:void(0);"><i class="icon-info3"></i> Thông tin chi tiết</a>'
                     },
                     {
+                        action :'change-status',
+                        html:'<a href="javascript:void(0);"><i class="icon-info3"></i> Đổi trạng thái</a>'
+                    },
+                    {
                         action :'delete',
                         html:'<a href="javascript:void(0);"><i class="icon-trash"></i> Xóa</a>'
                     }
@@ -301,25 +295,28 @@
                 cls: [],
                 row_length : 1,
                 templateColumns: [],
-                indexExportExcel: ''
             }
         },
         mounted(){
             this.getData()
             this.getColumns()
+            this.getCommonData()
         },
         methods: {
-            setCommonData(i,key,value){
-
-                if(key != null)
-                {
-                    // console.log(key)
-                    this.commonData[i-1].key = key
-                }
-                if(value != null)
-                {
-                    this.commonData[i-1].value = value.target.value
-                }
+            getCommonData(){
+                let vm =this
+                axios.get(`/api/get-common-columns/${vm.templateId}`).then(data => {
+                    let d = data.data
+                    d.forEach(i => {
+                        i.key = i.column_id
+                        delete i.column_id
+                        delete i.template_id
+                    })
+                    vm.commonData = d
+                }).catch(err => {
+                    console.log(err)
+                    alert('co loi. Vui long bao lai voi dev')
+                })
             },
             getColumns(){
                 axios.get('/api/templates/'+this.templateId).then(data => {
@@ -349,10 +346,6 @@
                             text: 'Tên sản phẩm'
                         },
                         {
-                            key: 'branch_aliexpress',
-                            text: 'Nhánh trên Aliexpress'
-                        },
-                        {
                           key: 'main_image_url_img',
                           text: 'Ảnh đại diện'
                         },
@@ -380,8 +373,19 @@
 
                         }
                     })
-                url+='indexexport='+vm.indexExportExcel
                     window.open(url,'_blank')
+            },
+            saveCommon(){
+                let vm = this
+                axios.post(`/api/save-common-columns/${vm.templateId}`,{
+                    common: vm.commonData
+                }).then(data => {
+                    console.log(data)
+                    alert('Thanh cong')
+                }).catch(err => {
+                    console.log(err)
+                    alert('Co loi xay ra, vui long bao lai voi Dev')
+                })
             },
             updateItem(){
                 let vm = this
@@ -462,6 +466,26 @@
                 if(event[1] == 'view')
                 {
                     vm.showItem(event[0])
+                }
+                if(event[1] == 'change-status')
+                {
+
+                    axios.put(`/api/change-status-product/${this.templateId}/${event[0]}`).then(data => {
+                        vm.data.forEach(i => {
+                            if (i[vm.primaryKey] == event[0]) {
+                                if (i.exported == 'Đã xuất Excel')
+                                {
+                                    i.exported = 'Chưa xuất Excel'
+                                }
+                                else{
+                                    i.exported = 'Đã xuất Excel'
+                                }
+                            }
+                        })
+                    }).catch(err => {
+                        console.log(err)
+                        alert('Có lỗi xảy ra, vui lòng báo với DEV')
+                    })
                 }
             },
             deleteItem(){

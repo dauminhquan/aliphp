@@ -53,15 +53,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if(Product::where('aliexpress_product_id',$request->aliexpress_product_id) -> first())
+        {
+            return response()->json([
+                'message' => 'SP da ton tai'
+            ],403);
+        }
         $data = (array)$request->all();
+
         $data['item_sku'] = strtoupper(Str::random(10));
         while (Product::where('item_sku',$data['item_sku'])->first() != null)
         {
             $data['item_sku'] = strtoupper(Str::random(10));
         }
         $columns = Schema::getColumnListing('products');
+
         $product = new Product();
-            foreach ($data as $key=> $item)
+            foreach ($data as $key => $item)
             {
                 if(in_array($key,$columns))
                 {

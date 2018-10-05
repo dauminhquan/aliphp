@@ -105,8 +105,8 @@
                             text: 'Tên sản phẩm'
                         },
                         {
-                            key:'branch_aliexpress',
-                            text: 'Ngách trên Aliexpress'
+                            key:'query_keyword',
+                            text: 'Từ khóa tìm kiếm'
                         }
 
                     ]

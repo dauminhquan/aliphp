@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CommonColumn;
 use App\Excel;
 use App\Product;
 use App\Template;
@@ -134,6 +135,7 @@ class TemplateController extends Controller
     {
         $template = new Template;
         $template->name = $request->template_name;
+        $template->sort = $request->sort;
         $template->save();
 
         try
@@ -194,6 +196,7 @@ class TemplateController extends Controller
     public function update(Request $request, $id)
     {
         $template = Template::findOrFail($id);
+        $template->sort = $request->sort;
         $oldColumns = $template->columns;
         $idOldColumns = [];
         $newColumns = $request->columns;
@@ -253,5 +256,51 @@ class TemplateController extends Controller
         Excel::where('template_id',$id)->delete();
         $template->delete();
         return $template;
+    }
+    public function saveCommonColumns(Request $request,$id)
+    {
+        $template = Template::findOrFail($id);
+        $cls = $request->common;
+        $template->commonColumns()->detach();
+        foreach ($cls as $cl)
+        {
+            $cl = (Object)$cl;
+            $template->commonColumns()->attach($cl->key,['value' => $cl->value]);
+        }
+        return $template;
+    }
+    public function getCommonColumns($id)
+    {
+        $template = Template::findOrFail($id);
+        return CommonColumn::where('template_id',$id)->get();
+    }
+    public function changeStatusProduct($id,$productId){
+        $template = Template::findOrFail($id);
+        $p = DB::table('template_products')->where('template_id','=',$id)->where('product_id','=',$productId)->first();
+        if($p != null)
+        {
+            if($p->exported == 1)
+            {
+                DB::table('template_products')->where('template_id','=',$id)->where('product_id','=',$productId)->update(['exported' => 0]);
+                $columns = $template->columns;
+                $product = Product::findOrFail($productId);
+                foreach ($columns as $column)
+                {
+                    $excel = new Excel();
+                    $excel->template_id = $template->id;
+                    $excel->product_id = $productId;
+                    $excel->column_id = $column->id;
+                    $cl = $column->product_column;
+                    $excel->value = $product->$cl;
+                    $excel->save();
+                }
+            }
+            else{
+                DB::table('template_products')->where('template_id','=',$id)->where('product_id','=',$productId)->update(['exported' => 1]);
+                Excel::where('product_id', $productId)->where('template_id',$id)->delete();
+            }
+        }
+        return $template;
+
     }
 }

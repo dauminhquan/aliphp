@@ -6,6 +6,7 @@ use App\Column;
 use App\Excel;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class ColumnController extends Controller
 {
@@ -71,10 +72,16 @@ class ColumnController extends Controller
                 $listError[] = $column;
             }
             else{
+                $column = (array)$column;
+                $tableColumns = Schema::getColumnListing('products');
+                $index = array_search ($column['name'],$tableColumns);
+                if($index !==false)
+                {
+                    $column['product_column'] = $tableColumns[$index];
+                }
                 Column::create($column);
             }
         }
-
         return [
             'list_err' => $listError
         ];

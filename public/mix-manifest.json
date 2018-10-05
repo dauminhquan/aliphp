@@ -1,7 +1,9 @@
 {
     "/js/template-products.js": "/js/template-products.js",
     "/js/templates.js": "/js/templates.js",
+    "/js/columns.js": "/js/columns.js",
     "/js/keys.js": "/js/keys.js",
     "/js/product-columns.js": "/js/product-columns.js",
-    "/chromeExtention/scripts/main.js": "/chromeExtention/scripts/main.js"
+    "/chromeExtention/scripts/main.js": "/chromeExtention/scripts/main.js",
+    "/chromeExtention/scripts/popup.js": "/chromeExtention/scripts/popup.js"
 }

@@ -257,7 +257,7 @@
             }
         },
         mounted(){
-            $('select').select2()
+            $('select').not(".length-select").select2()
             this.getData()
             this.getProductColumns()
         },

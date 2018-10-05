@@ -95,6 +95,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold" >Sắp xêp</label>
+                                        <div class="col-lg-8">
+                                            <textarea rows="5" class="form-control" required v-model="info.sort"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="control-label col-lg-2 text-bold" >Danh sách các cột</label>
                                         <div class="col-lg-10">
                                             <div class="form-group" v-for="column in info.columns" @key="column">
@@ -213,34 +219,34 @@
                                             <input type="text" class="form-control" v-model="create.name" required>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="addMultiColumn == false" v-for="index in row_length" :key="index">
-                                        <label class="control-label col-lg-2 text-bold" >Chọn cột</label>
-                                        <div class="col-lg-10">
-                                            <select class="form-control" required @change="setRows()">
-                                                <option></option>
-                                                <option v-for="c in cls" :key="c.id" :value="c.id">
-                                                    {{c.name}}
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <!--<div class="form-group" v-if="addMultiColumn == false" v-for="index in row_length" :key="index">-->
+                                        <!--<label class="control-label col-lg-2 text-bold" >Chọn cột</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<select class="form-control" required @change="setRows($event)">-->
+                                                <!--<option></option>-->
+                                                <!--<option v-for="c in cls" :key="c.id" :value="c.id">-->
+                                                    <!--{{c.name}}-->
+                                                <!--</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
 
-                                    </div>
-                                    <div class="form-group" v-if="addMultiColumn == true">
+                                    <!--</div>-->
+                                    <div class="form-group" v-if="true">
                                         <label class="control-label col-lg-2 text-bold" >Nhập text</label>
                                         <div class="col-lg-10">
                                             <textarea rows="5" class="form-control" v-model="addMultiRow"></textarea>
                                             <p>Form mẫu: <span>cot1;cot2;cot3;...</span>.</p>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-2 text-bold">Thêm cột</label>
-                                        <div class="col-lg-10">
-                                            <button type="button" class="btn btn-success" v-if="addMultiColumn == false" @click="addMultiColumn= !addMultiColumn;addMultiRow=null"><i class="icon-add"></i> Thêm một lúc nhiều cột</button>
-                                            <button type="button" class="btn btn-success" v-if="addMultiColumn == true" @click="addMultiColumn= !addMultiColumn;addMultiRow=null"><i class="icon-add"></i> Thêm từng cột</button>
-                                            <button type="button" class="btn btn-success" v-if="row_length < cls.length - 1 && addMultiColumn == false" @click="row_length++"><i class="icon-add"></i> Thêm 1 cột</button>
-                                            <button type="button" class="btn btn-danger" v-if="row_length > 0 && addMultiColumn == false " @click="row_length--"><i class="icon-trash"></i> Xóa cột</button>
-                                        </div>
-                                    </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="control-label col-lg-2 text-bold">Thêm cột</label>-->
+                                        <!--<div class="col-lg-10">-->
+                                            <!--<button type="button" class="btn btn-success" v-if="addMultiColumn == false" @click="addMultiColumn= !addMultiColumn;addMultiRow=null"><i class="icon-add"></i> Thêm một lúc nhiều cột</button>-->
+                                            <!--<button type="button" class="btn btn-success" v-if="addMultiColumn == true" @click="addMultiColumn= !addMultiColumn;addMultiRow=null"><i class="icon-add"></i> Thêm từng cột</button>-->
+                                            <!--<button type="button" class="btn btn-success" v-if="row_length < cls.length - 1 && addMultiColumn == false" @click="row_length++"><i class="icon-add"></i> Thêm 1 cột</button>-->
+                                            <!--<button type="button" class="btn btn-danger" v-if="row_length > 0 && addMultiColumn == false " @click="row_length&#45;&#45;"><i class="icon-trash"></i> Xóa cột</button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <div class="clearfix"></div>
                                 </fieldset>
                             </div>
@@ -523,7 +529,8 @@
                 axios.post(`/api/templates`,
                     {
                         template_name: vm.create.name,
-                        columns: vm.create.columns
+                        columns: vm.create.columns,
+                        sort: vm.addMultiRow
                     }
                 ).then(data=>{
                     vm.getData()

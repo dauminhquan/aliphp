@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 18:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(19);
+module.exports = __webpack_require__(61);
 
 
 /***/ }),
 
-/***/ 19:
+/***/ 61:
 /***/ (function(module, exports) {
 
 chrome.storage.local.get('statusTool', function (result) {
@@ -105,6 +105,21 @@ chrome.storage.local.get('statusTool', function (result) {
         stText.innerText = 'Tắt';
     };
 });
+
+chrome.storage.local.get('keyword', function (result) {
+    data = document.getElementById('keyword');
+    if (result.keyword != undefined) {
+        data.value = result.keyword;
+    }
+});
+
+var btnKew = document.getElementById('saveKeyword');
+btnKew.onclick = function () {
+    var data = document.getElementById('keyword');
+    chrome.storage.local.set({ 'keyword': data.value }, function () {
+        alert('thành công');
+    });
+};
 
 /***/ })
 

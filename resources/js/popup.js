@@ -29,4 +29,22 @@ chrome.storage.local.get('statusTool', function (result) {
         let stText = document.getElementById('text-status')
         stText.innerText = 'Tắt'
     }
+
 });
+
+chrome.storage.local.get('keyword',function (result) {
+    data = document.getElementById('keyword')
+    if(result.keyword != undefined)
+    {
+        data.value = result.keyword
+    }
+})
+
+let btnKew = document.getElementById('saveKeyword')
+btnKew.onclick  = function () {
+    let data = document.getElementById('keyword')
+    chrome.storage.local.set({'keyword': data.value},function () {
+        alert('thành công')
+    });
+}
+

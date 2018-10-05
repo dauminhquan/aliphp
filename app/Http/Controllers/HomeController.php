@@ -35,10 +35,10 @@ class HomeController extends Controller
         return view('keys');
     }
     public function exportExcel(Request $request,$id){
-        $keys = $request->keys();
 
+        $keys = $request->keys();
         $template = Template::findOrFail($id);
-        $columns = explode(';',$request->indexexport);
+        $columns = explode(';',$template->sort);
         $products = $template->productsWillExport;
         $data = [];
         $dbColumns = Column::get();

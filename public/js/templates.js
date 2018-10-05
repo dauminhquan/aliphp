@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -63392,21 +63392,30 @@ if (false) {
 /* 57 */,
 /* 58 */,
 /* 59 */,
-/* 60 */
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(70);
 
 
 /***/ }),
-/* 61 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__content__);
 
 
@@ -63416,19 +63425,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 62 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(63)
+  __webpack_require__(72)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(65)
+var __vue_script__ = __webpack_require__(74)
 /* template */
-var __vue_template__ = __webpack_require__(66)
+var __vue_template__ = __webpack_require__(75)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63467,13 +63476,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 63 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63493,7 +63502,7 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -63507,7 +63516,7 @@ exports.push([module.i, "\n.image-main{\n    width: 50%;\n    margin: auto;\n}\n
 
 
 /***/ }),
-/* 65 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63521,6 +63530,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_select2_select2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_select2_select2__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__template_components_select2_select2__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__template_components_select2_select2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__template_components_select2_select2__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64024,7 +64039,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             vm.create.columns = cs;
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/api/templates', {
                 template_name: vm.create.name,
-                columns: vm.create.columns
+                columns: vm.create.columns,
+                sort: vm.addMultiRow
             }).then(function (data) {
                 vm.getData();
                 vm.waiting = false;
@@ -64189,7 +64205,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 66 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -64481,6 +64497,44 @@ var render = function() {
                                     _vm.$set(
                                       _vm.info,
                                       "name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label col-lg-2 text-bold"
+                              },
+                              [_vm._v("Sắp xêp")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-8" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.info.sort,
+                                    expression: "info.sort"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { rows: "5", required: "" },
+                                domProps: { value: _vm.info.sort },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.info,
+                                      "sort",
                                       $event.target.value
                                     )
                                   }
@@ -64841,250 +64895,94 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "modal-body" }, [
-                        _c(
-                          "fieldset",
-                          { staticClass: "content-group" },
-                          [
-                            _c("legend", { staticClass: "text-bold " }, [
-                              _vm._v("Các thông tin")
-                            ]),
+                        _c("fieldset", { staticClass: "content-group" }, [
+                          _c("legend", { staticClass: "text-bold " }, [
+                            _vm._v("Các thông tin")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label col-lg-2 text-bold"
+                              },
+                              [_vm._v("Tên template")]
+                            ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "control-label col-lg-2 text-bold"
-                                },
-                                [_vm._v("Tên template")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.create.name,
-                                      expression: "create.name"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", required: "" },
-                                  domProps: { value: _vm.create.name },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.create,
-                                        "name",
-                                        $event.target.value
-                                      )
-                                    }
+                            _c("div", { staticClass: "col-lg-10" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.create.name,
+                                    expression: "create.name"
                                   }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.row_length, function(index) {
-                              return _vm.addMultiColumn == false
-                                ? _c(
-                                    "div",
-                                    { key: index, staticClass: "form-group" },
-                                    [
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass:
-                                            "control-label col-lg-2 text-bold"
-                                        },
-                                        [_vm._v("Chọn cột")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-lg-10" }, [
-                                        _c(
-                                          "select",
-                                          {
-                                            staticClass: "form-control",
-                                            attrs: { required: "" },
-                                            on: {
-                                              change: function($event) {
-                                                _vm.setRows()
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("option"),
-                                            _vm._v(" "),
-                                            _vm._l(_vm.cls, function(c) {
-                                              return _c(
-                                                "option",
-                                                {
-                                                  key: c.id,
-                                                  domProps: { value: c.id }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                " +
-                                                      _vm._s(c.name) +
-                                                      "\n                                            "
-                                                  )
-                                                ]
-                                              )
-                                            })
-                                          ],
-                                          2
-                                        )
-                                      ])
-                                    ]
-                                  )
-                                : _vm._e()
-                            }),
-                            _vm._v(" "),
-                            _vm.addMultiColumn == true
-                              ? _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass:
-                                        "control-label col-lg-2 text-bold"
-                                    },
-                                    [_vm._v("Nhập text")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-lg-10" }, [
-                                    _c("textarea", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.addMultiRow,
-                                          expression: "addMultiRow"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: { rows: "5" },
-                                      domProps: { value: _vm.addMultiRow },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.addMultiRow = $event.target.value
-                                        }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", required: "" },
+                                domProps: { value: _vm.create.name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.create,
+                                      "name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          true
+                            ? _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "control-label col-lg-2 text-bold"
+                                  },
+                                  [_vm._v("Nhập text")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-10" }, [
+                                  _c("textarea", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.addMultiRow,
+                                        expression: "addMultiRow"
                                       }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v("Form mẫu: "),
-                                      _c("span", [
-                                        _vm._v("cot1;cot2;cot3;...")
-                                      ]),
-                                      _vm._v(".")
-                                    ])
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { rows: "5" },
+                                    domProps: { value: _vm.addMultiRow },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.addMultiRow = $event.target.value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v("Form mẫu: "),
+                                    _c("span", [_vm._v("cot1;cot2;cot3;...")]),
+                                    _vm._v(".")
                                   ])
                                 ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "control-label col-lg-2 text-bold"
-                                },
-                                [_vm._v("Thêm cột")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-10" }, [
-                                _vm.addMultiColumn == false
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-success",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            _vm.addMultiColumn = !_vm.addMultiColumn
-                                            _vm.addMultiRow = null
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "icon-add" }),
-                                        _vm._v(" Thêm một lúc nhiều cột")
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.addMultiColumn == true
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-success",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            _vm.addMultiColumn = !_vm.addMultiColumn
-                                            _vm.addMultiRow = null
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "icon-add" }),
-                                        _vm._v(" Thêm từng cột")
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.row_length < _vm.cls.length - 1 &&
-                                _vm.addMultiColumn == false
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-success",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            _vm.row_length++
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "icon-add" }),
-                                        _vm._v(" Thêm 1 cột")
-                                      ]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.row_length > 0 &&
-                                _vm.addMultiColumn == false
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-danger",
-                                        attrs: { type: "button" },
-                                        on: {
-                                          click: function($event) {
-                                            _vm.row_length--
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "icon-trash" }),
-                                        _vm._v(" Xóa cột")
-                                      ]
-                                    )
-                                  : _vm._e()
                               ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "clearfix" })
-                          ],
-                          2
-                        )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "clearfix" })
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-footer" }, [

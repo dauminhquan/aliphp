@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 67);
+/******/ 	return __webpack_require__(__webpack_require__.s = 76);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -63246,21 +63246,30 @@ if (false) {
 /* 64 */,
 /* 65 */,
 /* 66 */,
-/* 67 */
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(68);
+module.exports = __webpack_require__(77);
 
 
 /***/ }),
-/* 68 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__content___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__content__);
 
 
@@ -63270,19 +63279,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 69 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(70)
+  __webpack_require__(79)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(72)
+var __vue_script__ = __webpack_require__(81)
 /* template */
-var __vue_template__ = __webpack_require__(86)
+var __vue_template__ = __webpack_require__(95)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63321,13 +63330,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 70 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(71);
+var content = __webpack_require__(80);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63347,7 +63356,7 @@ if(false) {
 }
 
 /***/ }),
-/* 71 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -63361,25 +63370,19 @@ exports.push([module.i, "\n.image-main{\n    width: 50%;\n    margin: auto;\n}\n
 
 
 /***/ }),
-/* 72 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_datatable_table__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__products_products__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__products_products__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__products_products___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__products_products__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_select2_select2__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_select2_select2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_select2_select2__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -63615,10 +63618,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            commonData: [{
-                key: '',
-                value: ''
-            }],
+            commonData: [],
             columnCommon: 0,
             showProducts: true,
             textAddProduct: '',
@@ -63644,6 +63644,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 action: 'view',
                 html: '<a href="javascript:void(0);"><i class="icon-info3"></i> Thông tin chi tiết</a>'
             }, {
+                action: 'change-status',
+                html: '<a href="javascript:void(0);"><i class="icon-info3"></i> Đổi trạng thái</a>'
+            }, {
                 action: 'delete',
                 html: '<a href="javascript:void(0);"><i class="icon-trash"></i> Xóa</a>'
             }],
@@ -63666,25 +63669,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             cls: [],
             row_length: 1,
-            templateColumns: [],
-            indexExportExcel: ''
+            templateColumns: []
         };
     },
     mounted: function mounted() {
         this.getData();
         this.getColumns();
+        this.getCommonData();
     },
 
     methods: {
-        setCommonData: function setCommonData(i, key, value) {
-
-            if (key != null) {
-                // console.log(key)
-                this.commonData[i - 1].key = key;
-            }
-            if (value != null) {
-                this.commonData[i - 1].value = value.target.value;
-            }
+        getCommonData: function getCommonData() {
+            var vm = this;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/get-common-columns/' + vm.templateId).then(function (data) {
+                var d = data.data;
+                d.forEach(function (i) {
+                    i.key = i.column_id;
+                    delete i.column_id;
+                    delete i.template_id;
+                });
+                vm.commonData = d;
+            }).catch(function (err) {
+                console.log(err);
+                alert('co loi. Vui long bao lai voi dev');
+            });
         },
         getColumns: function getColumns() {
             var _this = this;
@@ -63716,9 +63724,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     key: 'item_name',
                     text: 'Tên sản phẩm'
                 }, {
-                    key: 'branch_aliexpress',
-                    text: 'Nhánh trên Aliexpress'
-                }, {
                     key: 'main_image_url_img',
                     text: 'Ảnh đại diện'
                 }, {
@@ -63741,8 +63746,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     url += keyO.name + '=' + i.value + '&';
                 }
             });
-            url += 'indexexport=' + vm.indexExportExcel;
             window.open(url, '_blank');
+        },
+        saveCommon: function saveCommon() {
+            var vm = this;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/api/save-common-columns/' + vm.templateId, {
+                common: vm.commonData
+            }).then(function (data) {
+                console.log(data);
+                alert('Thanh cong');
+            }).catch(function (err) {
+                console.log(err);
+                alert('Co loi xay ra, vui long bao lai voi Dev');
+            });
         },
         updateItem: function updateItem() {
             var vm = this;
@@ -63814,6 +63830,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             if (event[1] == 'view') {
                 vm.showItem(event[0]);
+            }
+            if (event[1] == 'change-status') {
+
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.put('/api/change-status-product/' + this.templateId + '/' + event[0]).then(function (data) {
+                    vm.data.forEach(function (i) {
+                        if (i[vm.primaryKey] == event[0]) {
+                            if (i.exported == 'Đã xuất Excel') {
+                                i.exported = 'Chưa xuất Excel';
+                            } else {
+                                i.exported = 'Đã xuất Excel';
+                            }
+                        }
+                    });
+                }).catch(function (err) {
+                    console.log(err);
+                    alert('Có lỗi xảy ra, vui lòng báo với DEV');
+                });
             }
         },
         deleteItem: function deleteItem() {
@@ -63975,19 +64008,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 73 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(74)
+  __webpack_require__(83)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(76)
+var __vue_script__ = __webpack_require__(85)
 /* template */
-var __vue_template__ = __webpack_require__(85)
+var __vue_template__ = __webpack_require__(94)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -64026,13 +64059,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 74 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(75);
+var content = __webpack_require__(84);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -64052,7 +64085,7 @@ if(false) {
 }
 
 /***/ }),
-/* 75 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -64066,12 +64099,12 @@ exports.push([module.i, "\n.image-main{\n    width: 50%;\n    margin: auto;\n}\n
 
 
 /***/ }),
-/* 76 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_datatable_table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_datatable_table__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
@@ -64173,8 +64206,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     key: 'item_name',
                     text: 'Tên sản phẩm'
                 }, {
-                    key: 'branch_aliexpress',
-                    text: 'Ngách trên Aliexpress'
+                    key: 'query_keyword',
+                    text: 'Từ khóa tìm kiếm'
                 }];
             }).catch(function (err) {
                 console.log(err);
@@ -64239,19 +64272,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 77 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(78)
+  __webpack_require__(87)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(89)
 /* template */
-var __vue_template__ = __webpack_require__(84)
+var __vue_template__ = __webpack_require__(93)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -64290,13 +64323,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 78 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(79);
+var content = __webpack_require__(88);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -64316,7 +64349,7 @@ if(false) {
 }
 
 /***/ }),
-/* 79 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
@@ -64330,12 +64363,12 @@ exports.push([module.i, "\n.dt-button-collection button{\n    width: 100% !impor
 
 
 /***/ }),
-/* 80 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__checkboxItem__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__checkboxItem__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__checkboxItem___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__checkboxItem__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_datatables___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_datatables__);
@@ -64578,15 +64611,15 @@ __webpack_require__(18);
 });
 
 /***/ }),
-/* 81 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(82)
+var __vue_script__ = __webpack_require__(91)
 /* template */
-var __vue_template__ = __webpack_require__(83)
+var __vue_template__ = __webpack_require__(92)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -64625,7 +64658,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 82 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64679,7 +64712,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 83 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -64707,7 +64740,7 @@ if (false) {
 }
 
 /***/ }),
-/* 84 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65013,7 +65046,7 @@ if (false) {
 }
 
 /***/ }),
-/* 85 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65064,7 +65097,7 @@ if (false) {
 }
 
 /***/ }),
-/* 86 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65565,10 +65598,10 @@ var render = function() {
                             _c(
                               "div",
                               { staticClass: "col-lg-10" },
-                              _vm._l(_vm.columnCommon, function(i) {
+                              _vm._l(_vm.commonData, function(cl, index) {
                                 return _c(
                                   "div",
-                                  { key: i, staticClass: "form-group" },
+                                  { key: index, staticClass: "form-group" },
                                   [
                                     _c("div", { staticClass: "row" }, [
                                       _c(
@@ -65578,11 +65611,12 @@ var render = function() {
                                           _c("select2", {
                                             staticClass: "form-control",
                                             attrs: {
+                                              value: cl.key,
                                               options: _vm.templateColumns
                                             },
                                             on: {
                                               input: function($event) {
-                                                _vm.setCommonData(i, $event)
+                                                cl.key = $event
                                               }
                                             }
                                           })
@@ -65592,14 +65626,30 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-lg-8" }, [
                                         _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: cl.value,
+                                              expression: "cl.value"
+                                            }
+                                          ],
                                           staticClass: "form-control",
                                           attrs: {
                                             type: "text",
                                             placeholder: "Nhập giá trị"
                                           },
+                                          domProps: { value: cl.value },
                                           on: {
-                                            change: function($event) {
-                                              _vm.setCommonData(i, null, $event)
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                cl,
+                                                "value",
+                                                $event.target.value
+                                              )
                                             }
                                           }
                                         })
@@ -65609,44 +65659,6 @@ var render = function() {
                                 )
                               })
                             )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "control-label col-lg-2 text-bold"
-                              },
-                              [_vm._v("Thứ tự xuất")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-10" }, [
-                              _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.indexExportExcel,
-                                    expression: "indexExportExcel"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { required: "" },
-                                domProps: { value: _vm.indexExportExcel },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.indexExportExcel = $event.target.value
-                                  }
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("p", [
-                              _vm._v("Định dạng colum1;colum2;column3;...")
-                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
@@ -65665,7 +65677,6 @@ var render = function() {
                                 attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
-                                    _vm.columnCommon++
                                     _vm.commonData.push({ key: "", value: "" })
                                   }
                                 }
@@ -65683,7 +65694,6 @@ var render = function() {
                                 attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
-                                    _vm.columnCommon--
                                     _vm.commonData.pop()
                                   }
                                 }
@@ -65718,6 +65728,21 @@ var render = function() {
                           [
                             _c("i", { staticClass: "icon-file-download" }),
                             _vm._v(" Xuất Excel")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            attrs: { type: "button" },
+                            on: { click: _vm.saveCommon }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "glyphicon glyphicon-save-file"
+                            }),
+                            _vm._v(" Lưu cột chung")
                           ]
                         )
                       ])

@@ -143,7 +143,6 @@
     import table from './../../components/datatable/table'
     import axios from 'axios'
     import trans from './../config'
-    import select2 from './../../components/select2/select2'
     export default {
         computed:{
             setAll(){
@@ -152,7 +151,6 @@
         },
         components: {
             'data-table' : table,
-            'select2' : select2
         },
         data(){
             return {
@@ -208,7 +206,6 @@
             }
         },
         mounted(){
-            $('select').select2()
             this.getData()
         },
         methods: {
