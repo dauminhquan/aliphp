@@ -86,6 +86,7 @@
                 var vm = this
                 axios.get('/api/products'+'?size='+perPage+'&page='+page).then(data => {
                     vm.data = data.data.data
+
                     if(vm.listIdSelected.length > 0)
                     {
                         vm.listIdSelected.forEach(item => {
@@ -95,6 +96,9 @@
                         })
 
                     }
+                    vm.data.forEach(i => {
+                        i.main_image = `<img src="${i.main_image_url}" style="max-width: 200px">`
+                    })
                     vm.columns = [
                         {
                             key: 'id',
@@ -103,6 +107,10 @@
                         {
                             key: 'item_name',
                             text: 'Tên sản phẩm'
+                        },
+                        {
+                            key: 'main_image',
+                            text: 'Ảnh chính'
                         },
                         {
                             key:'query_keyword',

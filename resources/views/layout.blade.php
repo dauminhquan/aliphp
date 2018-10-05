@@ -7,6 +7,7 @@
     <title>Products of Aliexpress</title>
     <link href="{{asset('images/favicon.ico')}}" rel="shortcut icon" type="image/x-icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="{{asset("css/common.css")}}" rel="stylesheet" type="text/css">
 

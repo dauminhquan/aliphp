@@ -297,10 +297,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;" title="${item.branch_aliexpress}">${item.branch_aliexpress}</p>`
-                        item.other_images_url = item.other_images.split(';')
+
+                        item.other_images_url = item.other_images != null ? item.other_images.split(';') : []
                         item.other_images_url.filter(item => {
                             return item != '' && item != null && item!= undefined
                         })
+                        item.img_url = `<img src="${item.main_image_url}" style="max-width: 200px">`
                         return item
                     })
 
@@ -322,7 +324,7 @@
                             text: 'Các kích cỡ'
                         },
                         {
-                          key: 'standard_price',
+                          key: 'img_url',
                           text: 'Giá dự kiến'
                         },
                         {
@@ -330,14 +332,13 @@
                           text: 'Url'
                         },
                         {
-                          key: 'branch_aliexpress_html',
-                          text: 'Category'
+                          key: 'query_keyword',
+                          text: 'Từ khóa tìm kiếm'
                         }
 
                     ]
                 }).catch(err => {
                     console.log(err)
-                    vm.config.notifyError()
                 })
             },
             selectAll(){
