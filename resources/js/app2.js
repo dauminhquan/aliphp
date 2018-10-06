@@ -220,7 +220,7 @@ chrome.storage.local.get('statusTool', function (result) {
                             success: function (data) {
                                 if(data.result == 1) {
 
-                                    let price = ((parseFloat(highPrice) + parseFloat(data.priceShip)) * 2).toFixed(2)
+                                    let price = ((parseFloat(highPrice) + parseFloat(data.priceShip)) * 1.7).toFixed(2)
 
                                     $.expr[':'].contains = function(a, i, m) {
                                         return jQuery(a).text().toUpperCase()
