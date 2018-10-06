@@ -2,7 +2,8 @@ const categoryUrl = [
     'aliexpress.com/category',
     'aliexpress.com/w/',
     'aliexpress.com/af/',
-	'aliexpress.com/wholesale'
+	'aliexpress.com/wholesale',
+    'aliexpress.com/premium/'
 ];
 const productUrl = [
     'store/product/',
