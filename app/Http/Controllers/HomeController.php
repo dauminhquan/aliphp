@@ -7,7 +7,9 @@ use App\Key;
 use App\Product;
 use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Excel as ExcelModel;
 class HomeController extends Controller
@@ -118,7 +120,18 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function test(Request $request){
+    public function replacePassword(Request $request){
+
+            $passOld = $request->oldPassword;
+            if(Hash::check($passOld,Auth::user()->password))
+            {
+                $user = Auth::user();
+                $user->password = Hash::make($request->newPassword);
+                $user->update();
+                return response()->json(['message' => 'success'],200);
+            }
+            return response()->json(['message' => 'err'],403);
+
 
     }
 }

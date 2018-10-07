@@ -10,7 +10,8 @@
  *  Latest update: August 8, 2018
  *
  * ---------------------------------------------------------------------------- */
-
+import Vue from 'vue'
+import content from './form-change-password'
 window.$ = window.jQuery = require('jquery');
 require('bootstrap3')
 require('./plugin/drilldown')
@@ -637,3 +638,8 @@ $(function() {
     // Tooltip
     $('[data-popup="tooltip"]').tooltip();
 });
+
+Vue.component('form-change-password',content)
+const app = new Vue({
+    el: '#form-p',
+})

@@ -37,4 +37,5 @@ Route::group(['middleware' => 'authentication'],function (){
     Route::delete('/delete-many-columns',['uses' => 'ColumnController@destroyMany']);
     Route::post('/create-many-columns',['uses' => 'ColumnController@storeMany']);
     Route::resource('/resource-product-columns','ProductTableController');
+    Route::post('/change-password',['uses' => 'HomeController@replacePassword','as' => 'change-password']);
 });

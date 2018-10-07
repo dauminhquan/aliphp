@@ -195,12 +195,14 @@
                             <li><a href="{{route('product.columns')}}"><i class="icon-table2"></i> <span>Danh sách cột bảng sản phẩm</span></a></li>
                             <li><a href="{{route('templates')}}"><i class="icon-list"></i> <span>Danh sách Template</span></a></li>
                             <li><a href="{{route('keys')}}"><i class="icon-key"></i> <span>Danh sách mã sản phẩm</span></a></li>
-                            {{--<li><a href="{{route('excels')}}"><i class="icon-list"></i> <span>Xuất Excel</span></a></li>--}}
+                            <li><a href="#" data-toggle="modal" data-target="#modal_default"><i class="icon-lock"></i> <span>Đổi mật khẩu</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- /main navigation -->
+                <!-- Basic modal -->
 
+                <!-- /basic modal -->
             </div>
         </div>
         <!-- /main sidebar -->
@@ -209,6 +211,9 @@
         @section('content')
         @show
 
+    </div>
+    <div id="form-p">
+        <form-change-password></form-change-password>
     </div>
     <!-- /page content -->
 
@@ -220,6 +225,5 @@
 <script src="{{asset('js/plugins/select2.min.js')}}"></script>
 @section('script')
     @show
-
 </body>
 </html>

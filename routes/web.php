@@ -23,5 +23,5 @@ Route::group(['middleware' => 'authentication'],function (){
     Route::get('/template/{id}',['uses' => 'HomeController@template','as' => 'template']);
     Route::get('/export-excel/{id}',['uses' => 'HomeController@exportExcel','as' => 'export.excel']);
     Route::get('/logout',['uses' => 'AuthController@logout','as' => 'logout']);
-    Route::get('/test',['uses' => 'HomeController@test','as' => 'test']);
 });
+
