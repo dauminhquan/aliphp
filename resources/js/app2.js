@@ -113,7 +113,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 if(dataProduct.length > 0)
                 {
                     $.ajax({
-                        url: 'https://chat-team-qa.herokuapp.com/check-shiper',
+                        url: 'http://localhost:3000/check-shiper',
                         method: 'post',
                         async: true,
                         data: {
@@ -209,7 +209,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 else{
                     try{
                         $.ajax({
-                            url: 'https://chat-team-qa.herokuapp.com',
+                            url: 'http://localhost:3000',
                             type: 'get',
                             data: {
                                 ownerId: adminSeq,
@@ -233,7 +233,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                     let liSizes = $(infoColorAndSizeProduct).find('dt:contains(size):eq(0)').next('dd').find('li')
 
                                     let colors = '';
-
+                                    let images_colors = '';
                                     let sizes = '';
 
 
@@ -245,6 +245,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                         }
                                         else{
                                             colors+=$(liColors[i]).children('a:eq(0)').attr('title')+';'
+                                            images_colors+=$(liColors[i]).children('a:eq(0)').find('img:eq(0)').attr('src').replace('_50x50.jpg','')+';'
                                         }
                                     }
 
@@ -301,6 +302,9 @@ chrome.storage.local.get('statusTool', function (result) {
                                         async:false
                                     })
                                     let specifics = $('.product-property-list:eq(0)').html()
+                                    let outer_material_types = $('.product-property-list:eq(0)').find('span:contains(Material):eq(0)').next('span').text()
+
+
                                     let specificsLis = $('.product-property-list:eq(0)').find('li:not(:contains(Brand Name))')
                                     let key_works = ''
                                     let generic_keywords = []
@@ -352,7 +356,8 @@ chrome.storage.local.get('statusTool', function (result) {
                                         specifics: specifics,
                                         key_works: key_works,
                                         standard_price: price,
-                                        query_keyword : queryKeyWord
+                                        query_keyword : queryKeyWord,
+                                        images_colors: images_colors
                                     }
 
                                     for(let i = 0;i< 5 ;i++)
@@ -364,6 +369,20 @@ chrome.storage.local.get('statusTool', function (result) {
                                         else {
                                             dtPost['generic_keywords'+(i+1)] = generic_keywords[i]
                                         }
+                                    }
+
+                                    outer_material_types = outer_material_types.split(',')
+
+                                    for (let i = 0 ;i< 5;i++)
+                                    {
+                                        if(outer_material_types[i] == undefined)
+                                        {
+                                            dtPost['outer_material_type'+(i+1)] = ''
+                                        }
+                                        else {
+                                            dtPost['outer_material_type'+(i+1)] = outer_material_types[i]
+                                        }
+
                                     }
                                     for(let i=0;i<5;i++)
                                     {
@@ -396,7 +415,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                     }
 
                                     $.ajax({
-                                        url: 'https://chat-team-qa.herokuapp.com/put/product',
+                                        url: 'http://localhost:3000/put/product',
                                         type: 'POST',
                                         data: {
                                             data: JSON.stringify(dtPost)

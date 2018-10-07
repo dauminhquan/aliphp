@@ -49,8 +49,9 @@ class ProductTableController extends Controller
         $column = $request->column;
         try{
             Schema::table('products', function (Blueprint $table) use ($column,$request) {
-                $table->string($column)->nullable();
+                $table->text($column)->nullable();
             });
+            Column::where('name',$request->column)->update(['product_column' => $request->column]);
         }catch (\Exception $exception)
         {
             return response()->json(['error' => $exception->getMessage()],500);

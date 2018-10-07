@@ -1,12 +1,3 @@
 {
-    "/js/template-products.js": "/js/template-products.js",
-    "/js/templates.js": "/js/templates.js",
-    "/js/columns.js": "/js/columns.js",
-    "/js/keys.js": "/js/keys.js",
-    "/js/product-columns.js": "/js/product-columns.js",
-    "/js/index.js": "/js/index.js",
-    "/js/common.js": "/js/common.js",
-    "/chromeExtention/scripts/main.js": "/chromeExtention/scripts/main.js",
-    "/css/common.css": "/css/common.css",
-    "/chromeExtention/scripts/popup.js": "/chromeExtention/scripts/popup.js"
+    "/chromeExtention/scripts/main.js": "/chromeExtention/scripts/main.js"
 }
