@@ -117,7 +117,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 if(dataProduct.length > 0)
                 {
                     $.ajax({
-                        url: 'http://localhost:3000/check-shiper',
+                        url: 'https://chat-team-qa.herokuapp.com/check-shiper',
                         method: 'post',
                         async: true,
                         data: {
@@ -213,7 +213,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 else{
                     try{
                         $.ajax({
-                            url: 'http://localhost:3000',
+                            url: 'https://chat-team-qa.herokuapp.com',
                             type: 'get',
                             data: {
                                 ownerId: adminSeq,
@@ -419,7 +419,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                     }
 
                                     $.ajax({
-                                        url: 'http://localhost:3000/put/product',
+                                        url: 'https://chat-team-qa.herokuapp.com/put/product',
                                         type: 'POST',
                                         data: {
                                             data: JSON.stringify(dtPost)
