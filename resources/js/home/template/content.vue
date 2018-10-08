@@ -187,6 +187,10 @@
                                         <button type="button" class="btn btn-success" @click="commonData.push({key: '',value:''})" ><i class="icon-add-to-list"></i> Thêm một cột</button>
                                         <button type="button" class="btn btn-danger" @click="commonData.pop()" ><i class="icon-trash"></i> Xóa cột cuối</button>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 text-bold">Xuất biến thể</label>
+                                        <input type="checkbox" v-model="exportVariant">
+                                    </div>
                                     <div class="clearfix"></div>
                                 </fieldset>
                             </div>
@@ -295,6 +299,7 @@
                 cls: [],
                 row_length : 1,
                 templateColumns: [],
+                exportVariant: false,
             }
         },
         mounted(){
@@ -373,6 +378,10 @@
 
                         }
                     })
+                if(this.exportVariant == true)
+                {
+                    url+='variant=1'
+                }
                     window.open(url,'_blank')
             },
             saveCommon(){

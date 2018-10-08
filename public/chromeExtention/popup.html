@@ -47,8 +47,15 @@
         </div>
     </div>
     <div>
-        <input type="text" id="keyword" placeholder="key word">
-        <button id="saveKeyword" style="margin: 5px">Lưu key</button>
+        <form id="form-action">
+            <label> Nhập từ khóa tìm kiếm</label>
+            <input required type="text" name="keyword" id="keyword" placeholder="Từ khóa">
+            <label> Nhập tỉ giá sản phẩm</label>
+            <input required type="number" name="price" min="1" step="0.1" value="1.7" max="3" id="price" placeholder="Tỉ giá">
+            <label> Thời gian next trang ( Lưu ý, nên chọn thời gian lớn hơn 30s để tránh capcha + yêu cầu login từ Aliexpress)</label>
+            <input required type="number" name="number" min="20" value="30" max="60" id="time" placeholder="Tỉ giá">
+            <input type="submit" value="Lưu cài đặt" id="saveConfig" style="margin: 5px">
+        </form>
     </div>
 </div>
 <script src="scripts/popup.js"></script>

@@ -15,8 +15,11 @@ function joinData(colorDataSkuPropId,colorDataSkuId,colorTitle,sizeDataSkuPropId
 }
 
 chrome.storage.local.get('statusTool', function (result) {
-    chrome.storage.local.get('keyword',function (kw) {
-        var queryKeyWord = kw.keyword
+    chrome.storage.local.get('config',function (result1) {
+        let configTool = JSON.parse(result1.config)
+        var queryKeyWord = configTool.keyword
+        var tile = configTool.price
+        var timeNext = configTool.time
         if(queryKeyWord == undefined)
         {
             queryKeyWord = null
@@ -39,6 +42,7 @@ chrome.storage.local.get('statusTool', function (result) {
 
         if(config.checkCategoryUrl())
         {
+
             if(status == 1)
             {
 
@@ -134,7 +138,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                 {
                                     window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
                                 }
-                            },40000)
+                            },parseInt(timeNext)*1000)
                         },
                         error: function (err) {
                             console.log(err)
@@ -143,7 +147,7 @@ chrome.storage.local.get('statusTool', function (result) {
                                 {
                                     window.location = $($('a.page-next.ui-pagination-next')[0]).attr('href')
                                 }
-                            },40000)
+                            },parseInt(timeNext)*1000)
                         }
                     })
                 }
@@ -220,7 +224,7 @@ chrome.storage.local.get('statusTool', function (result) {
                             success: function (data) {
                                 if(data.result == 1) {
 
-                                    let price = ((parseFloat(highPrice) + parseFloat(data.priceShip)) * 1.7).toFixed(2)
+                                    let price = ((parseFloat(highPrice) + parseFloat(data.priceShip)) * parseFloat(tile)).toFixed(2)
 
                                     $.expr[':'].contains = function(a, i, m) {
                                         return jQuery(a).text().toUpperCase()
