@@ -49,11 +49,28 @@
     <div>
         <form id="form-action">
             <label> Nhập từ khóa tìm kiếm</label>
-            <input required type="text" name="keyword" id="keyword" placeholder="Từ khóa">
+            <input required type="text"  id="keyword" placeholder="Từ khóa">
+            <br>
+            <br>
+            <label> Nhập số * sản phẩm</label>
+            <input required type="text"  id="star" placeholder="Số * sản phẩm">
+            <br>
+            <br>
+            <label> Nhập * ship</label>
+            <input required type="number" min="4" max="5" step="0.1"  id="shipstar" placeholder="* ship">
+            <br>
+            <br>
+            <label> Nhập thời gian ship tối đa</label>
+            <input required type="number" min="1"  step="1" id="dateship" placeholder="Thời gian ship">
+            <br>
+            <br>
             <label> Nhập tỉ giá sản phẩm</label>
             <input required type="number" name="price" min="1" step="0.1" value="1.7" max="3" id="price" placeholder="Tỉ giá">
+            <br>
+            <br>
             <label> Thời gian next trang ( Lưu ý, nên chọn thời gian lớn hơn 30s để tránh capcha + yêu cầu login từ Aliexpress)</label>
             <input required type="number" name="number" min="20" value="30" max="60" id="time" placeholder="Tỉ giá">
+            <br>
             <input type="submit" value="Lưu cài đặt" id="saveConfig" style="margin: 5px">
         </form>
     </div>

@@ -34,8 +34,8 @@ chrome.storage.local.get('statusTool', function (result) {
 
 chrome.storage.local.get('config',function (result) {
     result = JSON.parse(result.config)
-    console.log(result)
-    let cf_arr= ['keyword','price','time']
+
+    let cf_arr= ['keyword','price','time','star','dateship',"shipstar"]
     let number = ['price','time']
     cf_arr.forEach(item => {
         data = document.getElementById(item)
@@ -49,7 +49,7 @@ chrome.storage.local.get('config',function (result) {
 let formAction = document.getElementById('form-action')
 formAction.onsubmit = function (evt) {
     evt.preventDefault();
-    let cf_arr= ['keyword','price','time']
+    let cf_arr= ['keyword','price','time','star','dateship',"shipstar"]
     let config = {
 
     }

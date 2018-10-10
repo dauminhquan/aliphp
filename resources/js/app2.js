@@ -20,12 +20,14 @@ chrome.storage.local.get('statusTool', function (result) {
         var queryKeyWord = configTool.keyword
         var tile = configTool.price
         var timeNext = configTool.time
+        var starLock = configTool.star
+        var dateShip = configTool.dateship
+        var shipstar = configTool.shipstar
         if(queryKeyWord == undefined)
         {
             queryKeyWord = null
         }
         var status = result.statusTool
-
 
         function getUrlVars(hashes)
         {
@@ -68,10 +70,13 @@ chrome.storage.local.get('statusTool', function (result) {
                         continue
                     }
                     startTitle = startTitle.replace('Star Rating: ','')
+
                     startTitle = startTitle.replace('out of','#')
                     startTitle = startTitle.slice('#')
-                    let star = parseFloat(startTitle[0])
-                    if(star < 4.8)
+
+                    let star = parseFloat(startTitle)
+
+                    if(star < starLock)
                     {
                         continue
                     }
@@ -121,7 +126,8 @@ chrome.storage.local.get('statusTool', function (result) {
                         method: 'post',
                         async: true,
                         data: {
-                            products: JSON.stringify(dataProduct)
+                            products: JSON.stringify(dataProduct),
+                            commitDay: dateShip
                         },
                         success: function (data) {
                             let ids = data.productIds
@@ -206,7 +212,7 @@ chrome.storage.local.get('statusTool', function (result) {
                 }
                 star = st.innerHTML
 
-                if(parseFloat(star) < 4.8)
+                if(parseInt($('span.promise-time-cont:eq(0)').text()) > dateShip)
                 {
                     window.close()
                 }
@@ -219,7 +225,8 @@ chrome.storage.local.get('statusTool', function (result) {
                                 ownerId: adminSeq,
                                 productId: idProduct,
                                 minPrice: lowePrice,
-                                maxPrice: highPrice
+                                maxPrice: highPrice,
+                                shipstar: shipstar
                             },
                             success: function (data) {
                                 if(data.result == 1) {
@@ -249,7 +256,12 @@ chrome.storage.local.get('statusTool', function (result) {
                                         }
                                         else{
                                             colors+=$(liColors[i]).children('a:eq(0)').attr('title')+';'
-                                            images_colors+=$(liColors[i]).children('a:eq(0)').find('img:eq(0)').attr('src').replace('_50x50.jpg','')+';'
+                                            let src = $(liColors[i]).children('a:eq(0)').find('img:eq(0)').attr('src');
+
+                                            if(src != undefined)
+                                            {
+                                                images_colors+=src.replace('_50x50.jpg','')+';'
+                                            }
                                         }
                                     }
 
