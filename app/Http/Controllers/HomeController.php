@@ -368,7 +368,13 @@ class HomeController extends Controller
                         $d1[$key] = $request->$key;
                     }
                     else if($column == 'main_image_url'){
-                        $d1[$column] = $image_colors[$index];
+                        if(array_key_exists($index,$image_colors))
+                        {
+                            $d1[$column] = $image_colors[$index];
+                        }
+                        else{
+                            $d1[$column] = null;
+                        }
                     }
                     else if($column == 'external_product_id'){
                         $k = Key::first();

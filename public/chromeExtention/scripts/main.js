@@ -100,6 +100,8 @@ chrome.storage.local.get('statusTool', function (result) {
         var starLock = configTool.star;
         var dateShip = configTool.dateship;
         var shipstar = configTool.shipstar;
+        var dateShip2 = configTool.dateship2;
+        var shipstar2 = configTool.shipstar2;
         if (queryKeyWord == undefined) {
             queryKeyWord = null;
         }
@@ -188,8 +190,7 @@ chrome.storage.local.get('statusTool', function (result) {
                         method: 'post',
                         async: true,
                         data: {
-                            products: JSON.stringify(dataProduct),
-                            commitDay: dateShip
+                            products: JSON.stringify(dataProduct)
                         },
                         success: function success(data) {
                             var ids = data.productIds;
@@ -274,7 +275,10 @@ chrome.storage.local.get('statusTool', function (result) {
                                 productId: idProduct,
                                 minPrice: lowePrice,
                                 maxPrice: highPrice,
-                                shipstar: shipstar
+                                shipstar: shipstar,
+                                shipstar2: shipstar2,
+                                commitDay: dateShip,
+                                commitDay2: dateShip2
                             },
                             success: function success(data) {
                                 if (data.result == 1) {

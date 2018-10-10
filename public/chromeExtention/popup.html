@@ -33,6 +33,11 @@
         .tat{
             background-color: rgba(74,115,232,0.24);
         }
+        input{
+            width: 100%;
+            border-radius: 5px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
@@ -48,30 +53,41 @@
     </div>
     <div>
         <form id="form-action">
-            <label> Nhập từ khóa tìm kiếm</label>
+            <b> Nhập từ khóa tìm kiếm</b>
             <input required type="text"  id="keyword" placeholder="Từ khóa">
             <br>
-            <br>
-            <label> Nhập số * sản phẩm</label>
+
+            <b> Nhập số * đánh giá</b>
             <input required type="text"  id="star" placeholder="Số * sản phẩm">
             <br>
-            <br>
-            <label> Nhập * ship</label>
-            <input required type="number" min="4" max="5" step="0.1"  id="shipstar" placeholder="* ship">
-            <br>
-            <br>
-            <label> Nhập thời gian ship tối đa</label>
-            <input required type="number" min="1"  step="1" id="dateship" placeholder="Thời gian ship">
-            <br>
-            <br>
-            <label> Nhập tỉ giá sản phẩm</label>
+
+            <b> Các điều kiện về Ship</b>
+            <div style="border: 1px solid #00bcd4;padding: 5px">
+                <hr>
+                <b> Chỉ số Shipping Speed 1</b>
+                <input required type="number" min="4" max="5" step="0.1"  id="shipstar" placeholder="* ship">
+                <br>
+                <b> Chỉ số Seller Guarantees 1</b>
+                <input required type="number" min="1"  step="1" id="dateship" placeholder="Thời gian ship">
+                <br>
+                <hr>
+                <b>Hoặc</b>
+                <hr>
+                <b> Chỉ số Shipping Speed 2</b>
+                <input required type="number" min="4" max="5" step="0.1"  id="shipstar2" placeholder="* ship">
+                <br>
+                <b> Chỉ số Seller Guarantees 2</b>
+                <input required type="number" min="1"  step="1" id="dateship2" placeholder="Thời gian ship">
+                <br>
+            </div>
+            <hr>
+            <b> Nhập tỉ giá sản phẩm</b>
             <input required type="number" name="price" min="1" step="0.1" value="1.7" max="3" id="price" placeholder="Tỉ giá">
             <br>
-            <br>
-            <label> Thời gian next trang ( Lưu ý, nên chọn thời gian lớn hơn 30s để tránh capcha + yêu cầu login từ Aliexpress)</label>
+            <b> Thời gian next trang ( Lưu ý, nên chọn thời gian lớn hơn 30s để tránh capcha + yêu cầu login từ Aliexpress)</b>
             <input required type="number" name="number" min="20" value="30" max="60" id="time" placeholder="Tỉ giá">
             <br>
-            <input type="submit" value="Lưu cài đặt" id="saveConfig" style="margin: 5px">
+            <button type="submit" id="saveConfig" style="margin: 5px">Lưu cài đặt</button>
         </form>
     </div>
 </div>

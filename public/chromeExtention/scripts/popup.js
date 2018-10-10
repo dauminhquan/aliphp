@@ -109,7 +109,7 @@ chrome.storage.local.get('statusTool', function (result) {
 chrome.storage.local.get('config', function (result) {
     result = JSON.parse(result.config);
 
-    var cf_arr = ['keyword', 'price', 'time', 'star', 'dateship', "shipstar"];
+    var cf_arr = ['keyword', 'price', 'time', 'star', 'dateship', "shipstar", 'dateship2', "shipstar2"];
     var number = ['price', 'time'];
     cf_arr.forEach(function (item) {
         data = document.getElementById(item);
@@ -122,7 +122,7 @@ chrome.storage.local.get('config', function (result) {
 var formAction = document.getElementById('form-action');
 formAction.onsubmit = function (evt) {
     evt.preventDefault();
-    var cf_arr = ['keyword', 'price', 'time', 'star', 'dateship', "shipstar"];
+    var cf_arr = ['keyword', 'price', 'time', 'star', 'dateship', "shipstar", 'dateship2', "shipstar2"];
     var config = {};
     cf_arr.forEach(function (item) {
         var data = document.getElementById(item).value;
