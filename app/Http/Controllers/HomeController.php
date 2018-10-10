@@ -293,6 +293,7 @@ class HomeController extends Controller
                         }
                         else{
                             $d1[$column] = $product->main_image_url;
+                            $image_colors[$index] = $product->main_image_url;
                         }
                     }
                     else if($column == 'external_product_id'){
@@ -380,6 +381,7 @@ class HomeController extends Controller
                         }
                         else{
                             $d1[$column] = $product->main_image_url;
+                            $image_colors[$index] = $product->main_image_url;
                         }
                     }
                     else if($column == 'external_product_id'){
